@@ -3,19 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+}
+
+@supports (selector(::-webkit-scrollbar)) {
+  * {
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
   }
 }
 
@@ -23,4 +27,274 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Animated background - performance optimized */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(59, 130, 246, 0.12) 50%, rgba(16, 185, 129, 0.12) 100%);
+  pointer-events: none;
+  z-index: -2;
+  animation: backgroundRotate 30s ease-in-out infinite;
+}
+
+html.dark body::before {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(16, 185, 129, 0.15) 100%);
+}
+
+@keyframes backgroundRotate {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+}
+
+/* Gradient mesh animation */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: -2;
+  animation: meshFlow 20s ease-in-out infinite;
+}
+
+html.dark body::after {
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(59, 130, 246, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 50% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 40%);
+}
+
+@keyframes meshFlow {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-50px, -50px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pageGradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pageOrb1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(100px, -50px) scale(1.1);
+  }
+  50% {
+    transform: translate(50px, 100px) scale(0.9);
+  }
+  75% {
+    transform: translate(-100px, 50px) scale(1.05);
+  }
+}
+
+@keyframes pageOrb2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(-80px, 100px) scale(0.9);
+  }
+  50% {
+    transform: translate(-100px, -50px) scale(1.1);
+  }
+  75% {
+    transform: translate(80px, -100px) scale(0.95);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .animate-slide-in-up {
+    animation: slideInUp 0.6s ease-out;
+  }
+
+  .animate-slide-in-down {
+    animation: slideInDown 0.6s ease-out;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+  }
+
+  .dark .gradient-bg {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  }
+
+  /* Page background animations */
+  .page-bg-orb {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-bg-orb::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -100px;
+    right: -100px;
+    animation: pageOrb1 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dark .page-bg-orb::before {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+  }
+
+  .page-bg-orb::after {
+    content: '';
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -50px;
+    left: -150px;
+    animation: pageOrb2 25s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .dark .page-bg-orb::after {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%);
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 1;
+  }
 }

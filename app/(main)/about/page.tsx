@@ -1,10 +1,10 @@
-import HomePage from "@/components/pages/home/HomePage";
+import AboutPage from "@/components/pages/about/AboutPage";
 
-export default function Home() {
+export default function About() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center bg-white dark:bg-black">
       <div className="w-full max-w-7xl px-6 lg:px-16 py-20">
-        <HomePage />
+        <AboutPage />
       </div>
     </main>
   );

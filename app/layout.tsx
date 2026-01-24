@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import Providers from "@/components/ThemeProvider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Porfolio",
-  description: "A personal portfolio website showcasing projects and skills.",
+  title: "Angelo Maturingan Principio - Portfolio",
+  description:
+    "Full-Stack Web Developer Portfolio showcasing projects and skills.",
+  icons: {
+    icon: "/public/angelo_principio_portfolio.ico",
+  },
 };
 
 export default function RootLayout({
@@ -23,11 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   );
