@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Principio-PA-Portfolio",
+  title: "Angelo Principio - Portfolio",
   description:
     "Full-Stack Web Developer Portfolio showcasing projects and skills.",
   icons: {

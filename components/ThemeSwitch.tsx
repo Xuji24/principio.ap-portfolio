@@ -1,7 +1,7 @@
 "use client";
 
 import { FiSun, FiMoon } from "react-icons/fi";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/components/ThemeContext";
 
 export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
@@ -10,11 +10,6 @@ export default function ThemeSwitch() {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
   };
-
-  if (!theme)
-    return (
-      <div className="w-6 h-6 rounded-full bg-gray-300 dark:bg-gray-700 animate-pulse" />
-    );
 
   return (
     <button

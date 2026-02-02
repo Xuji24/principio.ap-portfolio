@@ -55,7 +55,7 @@ export default function Navbar() {
     <nav className="w-full flex items-center justify-between py-8 px-6 lg:px-16 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50 backdrop-blur-sm  transition-all duration-300">
       <Link href="/">
         <h1 className="text-sm lg:text-lg font-bold text-black dark:text-white cursor-pointer hover:opacity-80 transition-opacity duration-200">
-          ANGELO MATURINGAN PRINCIPIO /{" "}
+          ANGELO PRINCIPIO /{" "}
           <span className="text-teal-600">Portfolio</span>
         </h1>
       </Link>
