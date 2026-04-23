@@ -1,50 +1,61 @@
 import HeroSection from "@/components/sections/HeroSection";
+import WhatIDo from "@/components/sections/WhatIDo";
+import TechStack from "@/components/sections/TechStack";
 import AboutPage from "@/components/pages/about/AboutPage";
 import ProjectPage from "@/components/pages/projects/ProjectPage";
 import ContactPage from "@/components/pages/contact/ContactPage";
 
+function SectionDivider() {
+  return (
+    <div className="w-full px-6 lg:px-16">
+      <div className="h-px bg-border" />
+    </div>
+  );
+}
+
 export default function Home() {
   return (
-    <main className="w-full bg-white dark:bg-black text-black dark:text-white transition-colors duration-300">
-      {/* Hero Section */}
-      <section
-        id="home"
-        className="min-h-screen flex items-center justify-center"
-      >
-        <div className="w-full max-w-7xl px-6 lg:px-16 py-20">
-          <HeroSection />
-        </div>
+    <main className="w-full bg-background text-foreground transition-colors duration-300">
+      {/* Hero */}
+      <section id="home" className="w-full max-w-7xl mx-auto">
+        <HeroSection />
       </section>
 
-      {/* About Section */}
-      <section
-        id="about"
-        className="min-h-screen flex items-center justify-center"
-      >
-        <div className="w-full max-w-fit">
-          <AboutPage />
-        </div>
+      <SectionDivider />
+
+      {/* What I Do */}
+      <section id="services" className="w-full max-w-7xl mx-auto">
+        <WhatIDo />
       </section>
 
-      {/* Projects Section */}
-      <section
-        id="projects"
-        className="min-h-screen flex items-center justify-center"
-      >
-        <div className="w-full max-w-8xl">
-          <ProjectPage />
-        </div>
+      <SectionDivider />
+
+      {/* Tech Stack */}
+      <section id="techstack" className="w-full max-w-7xl mx-auto">
+        <TechStack />
       </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="min-h-screen flex items-center justify-center"
-      >
-        <div className="w-full max-w-7xl">
-          <ContactPage />
-        </div>
+      <SectionDivider />
+
+      {/* About */}
+      <section id="about" className="w-full max-w-7xl mx-auto">
+        <AboutPage />
+      </section>
+
+      <SectionDivider />
+
+      {/* Projects */}
+      <section id="projects" className="w-full max-w-7xl mx-auto">
+        <ProjectPage />
+      </section>
+
+      <SectionDivider />
+
+      {/* Contact */}
+      <section id="contact" className="w-full max-w-7xl mx-auto">
+        <ContactPage />
       </section>
     </main>
   );
 }
+

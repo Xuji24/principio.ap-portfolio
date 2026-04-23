@@ -1,0 +1,6 @@
+{
+    "tasksync.agentOrchestration": false,
+    "tasksync.sessionWarningHours": 0,
+    "tasksync.responseTimeout": "0",
+    "tasksync.maxConsecutiveAutoResponses": 6
+}

@@ -7,6 +7,7 @@ interface ProjectCardProps {
   link?: string;
   status: string;
   image?: string;
+  tags?: string[];
 }
 
 export default function ProjectCard({
@@ -15,6 +16,7 @@ export default function ProjectCard({
   link,
   status,
   image,
+  tags = [],
 }: ProjectCardProps) {
   return (
     <a
@@ -23,9 +25,9 @@ export default function ProjectCard({
       rel="noopener noreferrer"
       className="group block h-full"
     >
-      <div className="h-full rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105 hover:-translate-y-2">
+      <div className="h-full rounded-2xl overflow-hidden card-tilt">
         {/* Card Container with Glassmorphism Effect */}
-        <div className="h-full bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:border-teal-400/50 dark:hover:border-teal-500/50 transition-all duration-300">
+        <div className="h-full card-tilt-inner bg-white/10 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:border-teal-400/50 dark:hover:border-teal-500/50 transition-shadow duration-300">
           {/* Image Section */}
           <div className="relative w-full h-56 bg-linear-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-black flex items-center justify-center overflow-hidden">
             {image ? (
@@ -53,9 +55,21 @@ export default function ProjectCard({
             <h3 className="text-2xl font-bold text-black dark:text-white mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
               {title}
             </h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-4"> 
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
               Status: <span className="font-semibold">{status}</span>
             </p>
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-xs font-semibold px-3 py-1 rounded-full bg-teal-500/10 dark:bg-teal-400/10 border border-teal-500/20 dark:border-teal-400/20 text-teal-700 dark:text-teal-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
             <p className="text-gray-700 dark:text-gray-400 text-sm mb-6 line-clamp-3 leading-relaxed">
               {description}
             </p>
