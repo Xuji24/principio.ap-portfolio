@@ -12,19 +12,15 @@ body {
   background-color: transparent;
 }
 
-/* dot-grid texture — sits above BackgroundCanvas (-z-10) */
+/* grid texture */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(0,0,0,0.045) 1px, transparent 1px);
-  background-size: 28px 28px;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
   z-index: -9;
-}
-
-html.dark body::before {
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
 }
 
 @layer base {
@@ -250,47 +246,51 @@ html.dark body::before {
   --color-destructive: var(--destructive);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-fira-code), ui-monospace, SFMono-Regular, monospace;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.625rem;
-  /* Light mode — indigo primary + amber accent */
-  --background: oklch(0.985 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(0.975 0.003 250);
-  --card-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.555 0.228 264);        /* indigo-600 */
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.945 0.01 250);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.96 0.005 250);
-  --muted-foreground: oklch(0.52 0.015 250);
-  --accent: oklch(0.769 0.162 75.5);        /* amber-400 — complementary */
-  --accent-foreground: oklch(0.25 0.04 75.5);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.9 0.008 250);
-  --input: oklch(0.9 0.008 250);
-  --ring: oklch(0.555 0.228 264);
+  --radius: 0.5rem;
+  /* Light mode - Clean aesthetic */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --primary: #00bcd4;
+  --primary-foreground: #ffffff;
+  --secondary: #7e57c2;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #7e57c2;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #00bcd4;
 }
 
 .dark {
-  /* Dark mode — indigo primary + amber accent */
-  --background: oklch(0.11 0.012 264);
-  --foreground: oklch(0.965 0.005 264);
-  --card: oklch(0.17 0.015 264);
-  --card-foreground: oklch(0.965 0.005 264);
-  --primary: oklch(0.682 0.195 264);        /* lighter indigo for dark */
-  --primary-foreground: oklch(0.11 0.012 264);
-  --secondary: oklch(0.235 0.015 264);
-  --secondary-foreground: oklch(0.965 0.005 264);
-  --muted: oklch(0.235 0.015 264);
-  --muted-foreground: oklch(0.625 0.015 264);
-  --accent: oklch(0.769 0.162 75.5);        /* amber-400 same in dark */
-  --accent-foreground: oklch(0.15 0.04 75.5);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.682 0.195 264);
+  --radius: 0.5rem;
+  /* Dark mode - Default tamalsen.dev theme */
+  --background: #0b0b0b;
+  --foreground: #e2e8f0;
+  --card: #111111;
+  --card-foreground: #e2e8f0;
+  --primary: #00e5ff;
+  --primary-foreground: #0b0b0b;
+  --secondary: #7e57c2;
+  --secondary-foreground: #ffffff;
+  --muted: #1f2937;
+  --muted-foreground: #9ca3af;
+  --accent: #7e57c2;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #333333;
+  --input: #333333;
+  --ring: #00e5ff;
 }
 
 @layer base {

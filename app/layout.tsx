@@ -1,17 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat, Inter, Fira_Code } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/ThemeProvider";
-import BackgroundCanvas from "@/components/BackgroundCanvas";
+import BackgroundEffects from "@/components/BackgroundEffects";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
   subsets: ["latin"],
 });
 
@@ -32,11 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased transition-colors duration-300`}
+        className={`${montserrat.variable} ${inter.variable} ${firaCode.variable} font-sans bg-background text-foreground antialiased transition-colors duration-300 overflow-x-hidden selection:bg-primary/30 selection:text-primary`}
         suppressHydrationWarning
       >
         <Providers>
-          <BackgroundCanvas />
+          <BackgroundEffects />
           <Navbar />
           {children}
         </Providers>

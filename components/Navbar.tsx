@@ -6,11 +6,10 @@ import ThemeSwitch from "./ThemeSwitch";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { name: "HOME", href: "home" },
-  { name: "SERVICES", href: "services" },
-  { name: "ABOUT", href: "about" },
-  { name: "PROJECTS", href: "projects" },
-  { name: "CONTACT", href: "contact" },
+  { name: "01 // home", href: "home" },
+  { name: "02 // expertise", href: "expertise" },
+  { name: "03 // work", href: "projects" },
+  { name: "04 // contact", href: "contact" },
 ];
 
 export default function Navbar() {
@@ -69,16 +68,15 @@ export default function Navbar() {
           return (
             <li key={item.name}>
               <Link
-                href={item.href}
+                href={`#${item.href}`}
                 onClick={(e) => handleNavClick(e, item.href)}
-                data-text={item.name}
-                className={`nav-link text-xs font-bold tracking-widest ${
+                className={`text-sm font-mono tracking-wide transition-colors ${
                   isActive
-                    ? "active-link text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-primary border-b-2 border-primary pb-1"
+                    : "text-muted-foreground hover:text-foreground hover:border-b-2 hover:border-muted-foreground pb-1"
                 }`}
               >
-                <span>{item.name}</span>
+                {item.name}
               </Link>
             </li>
           );
