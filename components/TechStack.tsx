@@ -17,6 +17,7 @@ const mainSkills = [
   { name: "MySQL", icon: "/MySQL.png" },
   { name: "Supabase", icon: "/Supabase.png" },
   { name: "jQuery", icon: "/Jquery.png" },
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", isExternal: true },
 ];
 
 const backendTools = [
@@ -70,7 +71,7 @@ export default function TechStack() {
           </h2>
           <div className="h-1 w-24 bg-primary mb-6" />
           <p className="font-mono text-muted-foreground text-sm max-w-2xl">
-            // TECHNOLOGIES AND TOOLS I UTILIZE TO BUILD SCALABLE APPLICATIONS.
+            {"// TECHNOLOGIES AND TOOLS I UTILIZE TO BUILD SCALABLE APPLICATIONS."}
           </p>
         </motion.div>
 
@@ -88,7 +89,7 @@ export default function TechStack() {
                 className="flex flex-col items-center justify-center p-6 rounded-2xl bg-card border border-border hover:border-primary/50 transition-colors group"
               >
                 <div className="relative w-12 h-12 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Image src={skill.icon} alt={skill.name} fill className="object-contain" />
+                  <Image src={skill.icon} alt={skill.name} fill className="object-contain" unoptimized={skill.isExternal} />
                 </div>
                 <span className="font-mono text-xs text-muted-foreground group-hover:text-foreground transition-colors text-center">
                   {skill.name}

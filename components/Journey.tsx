@@ -60,7 +60,7 @@ export default function Journey() {
           </h2>
           <div className="h-1 w-24 bg-primary mb-6" />
           <p className="font-mono text-muted-foreground text-sm">
-            // PROFESSIONAL EXPERIENCE AND INTERNSHIPS.
+            {"// PROFESSIONAL EXPERIENCE AND INTERNSHIPS."}
           </p>
         </motion.div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
 export default function Hero() {
@@ -41,9 +41,9 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="font-mono text-muted-foreground text-sm md:text-lg max-w-lg leading-relaxed"
           >
-            // FULL-STACK WEB DEVELOPER
+            {"// FULL-STACK WEB DEVELOPER"}
             <br />
-            // SPECIALIZING IN BUILDING EXCEPTIONAL DIGITAL EXPERIENCES
+            {"// SPECIALIZING IN BUILDING EXCEPTIONAL DIGITAL EXPERIENCES"}
           </motion.p>
         </div>
 

@@ -52,7 +52,7 @@ export default function Projects() {
             <div className="h-1 w-24 bg-primary" />
           </div>
           <p className="font-mono text-muted-foreground text-sm max-w-sm">
-            // A CURATED LIST OF RECENT PROJECTS SHOWCASING MY EXPERTISE AND PASSION FOR BUILDING.
+            {"// A CURATED LIST OF RECENT PROJECTS SHOWCASING MY EXPERTISE AND PASSION FOR BUILDING."}
           </p>
         </motion.div>
 
