@@ -38,7 +38,8 @@ export default function Journey() {
             opacity: [0.15, 0.25, 0.15],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[10%] -right-[5%] w-125 h-125 rounded-full bg-cyan-500/20 blur-[120px]"
+          className="hidden md:block absolute top-[10%] -right-[5%] w-125 h-125 rounded-full bg-cyan-500/20 blur-[120px]"
+          style={{ willChange: "transform, opacity" }}
         />
         <motion.div
           animate={{
@@ -46,7 +47,8 @@ export default function Journey() {
             opacity: [0.1, 0.2, 0.1],
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute top-[40%] -left-[10%] w-96 h-96 rounded-full bg-primary/20 blur-[100px]"
+          className="hidden md:block absolute top-[40%] -left-[10%] w-96 h-96 rounded-full bg-primary/20 blur-[100px]"
+          style={{ willChange: "transform, opacity" }}
         />
         <motion.div
           animate={{
@@ -54,7 +56,8 @@ export default function Journey() {
             opacity: [0.1, 0.25, 0.1],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-10%] right-[10%] w-150 h-150 rounded-full bg-cyan-600/10 blur-[150px]"
+          className="hidden md:block absolute bottom-[-10%] right-[10%] w-150 h-150 rounded-full bg-cyan-600/10 blur-[150px]"
+          style={{ willChange: "transform, opacity" }}
         />
         
         {/* Deep gradient overlay at the bottom for smooth transition */}

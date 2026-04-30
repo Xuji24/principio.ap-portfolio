@@ -29,7 +29,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-            className="font-heading font-black text-6xl md:text-7xl lg:text-[8rem] leading-[0.9] tracking-tighter mb-6 text-transparent bg-clip-text bg-linear-to-br from-foreground to-foreground/40"
+            className="font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] leading-[0.9] tracking-tighter mb-6 text-transparent bg-clip-text bg-linear-to-br from-foreground to-foreground/40"
           >
             ANGELO
             <br />
@@ -55,12 +55,12 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.4 }}
           className="flex justify-center lg:justify-end"
         >
-          <div className="w-full max-w-[320px] lg:max-w-[380px] group [perspective:1000px]">
+          <div className="w-full max-w-[320px] lg:max-w-95 group perspective-1000">
             <a
               href="http://m.me/angeloprincipio24"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative block w-full aspect-[4/5] rounded-3xl transition-all duration-700 [transform-style:preserve-3d] group-hover:transform-[rotateY(180deg)] shadow-2xl cursor-pointer"
+              className="relative block w-full aspect-4/5 rounded-3xl transition-all duration-700 transform-style-3d group-hover:rotate-y-180 shadow-2xl cursor-pointer"
             >
               {/* Front Face */}
               <div className="absolute inset-0 w-full h-full rounded-3xl bg-card/20 backdrop-blur-xl border border-border overflow-hidden backface-hidden flex flex-col items-center justify-center p-8 text-center group-hover:border-cyan-500/50 transition-colors shadow-inner">
@@ -90,11 +90,11 @@ export default function Hero() {
               </div>
 
               {/* Back Face */}
-              <div className="absolute inset-0 w-full h-full rounded-3xl bg-card/60 backdrop-blur-2xl border border-border overflow-hidden backface-hidden transform-[rotateY(180deg)] flex flex-col items-center justify-center p-8 text-center shadow-2xl">
+              <div className="absolute inset-0 w-full h-full rounded-3xl bg-card/60 backdrop-blur-2xl border border-border overflow-hidden backface-hidden rotate-y-180 flex flex-col items-center justify-center p-8 text-center shadow-2xl">
                 {/* Subtle Cyan Accents for Depth */}
-                <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[linear-gradient(45deg,transparent_45%,rgba(0,255,255,0.02)_50%,transparent_55%)] bg-[length:12px_12px] opacity-40 z-0" />
+                <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[linear-gradient(45deg,transparent_45%,rgba(0,255,255,0.02)_50%,transparent_55%)] bg-length:[12px_12px] opacity-40 z-0" />
                 <div className="absolute -bottom-10 -right-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-[50px] z-0" />
-                <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-[40px] z-0" />
+                <div className="absolute -top-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl z-0" />
 
                 <div className="w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center mb-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] relative z-10 group-hover:border-cyan-500/50 transition-colors duration-500">
                   <MessageCircle size={36} className="text-cyan-400" fill="currentColor" />
@@ -118,7 +118,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2"
       >
         <span className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase">
           Scroll

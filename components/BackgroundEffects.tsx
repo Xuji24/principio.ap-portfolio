@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 export default function BackgroundEffects() {
   return (
     <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none bg-background">
+      {/* Mobile Fallback: Static radial glow */}
+      <div className="absolute inset-0 md:hidden bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.1)_0%,transparent_80%)]" />
+
       {/* Central Cyan Glow Orb */}
       <motion.div
         animate={{
@@ -17,7 +20,8 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-150 max-h-150 bg-primary/20 rounded-full blur-[120px] mix-blend-screen"
+        className="hidden md:block absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-150 max-h-150 bg-primary/20 rounded-full blur-[120px] mix-blend-screen"
+        style={{ willChange: "transform, opacity" }}
       />
 
       {/* Secondary Purple Glow Orb */}
@@ -32,7 +36,8 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-[10%] right-[20%] w-[50vw] h-[50vw] max-w-175 max-h-175 bg-secondary/20 rounded-full blur-[140px] mix-blend-screen"
+        className="hidden md:block absolute bottom-[10%] right-[20%] w-[50vw] h-[50vw] max-w-175 max-h-175 bg-secondary/20 rounded-full blur-[140px] mix-blend-screen"
+        style={{ willChange: "transform, opacity" }}
       />
 
       {/* Floating Geometric Shape 1 */}
@@ -46,8 +51,8 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute top-[30%] right-[15%] w-32 h-32 border border-primary/20 rounded-3xl"
-        style={{ transformOrigin: "center center" }}
+        className="hidden md:block absolute top-[30%] right-[15%] w-32 h-32 border border-primary/20 rounded-3xl"
+        style={{ transformOrigin: "center center", willChange: "transform" }}
       />
 
       {/* Floating Geometric Shape 2 */}
@@ -62,7 +67,8 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "linear",
         }}
-        className="absolute bottom-[30%] left-[10%] w-24 h-24 border border-secondary/20 rounded-full"
+        className="hidden md:block absolute bottom-[30%] left-[10%] w-24 h-24 border border-secondary/20 rounded-full"
+        style={{ willChange: "transform" }}
       />
     </div>
   );
