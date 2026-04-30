@@ -9,7 +9,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 lg:px-16 pt-20"
+      className="relative min-h-[auto] md:min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 lg:px-16 pt-20 pb-12 md:pb-0"
     >
       <div className="z-10 w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-8">
         {/* Left Side: Typography */}

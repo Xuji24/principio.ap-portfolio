@@ -172,7 +172,7 @@ const TechSphere = ({ items }: { items: TechItem[] }) => {
 
   return (
     <div 
-      className="relative w-full h-125 md:h-175 flex items-center justify-center cursor-grab active:cursor-grabbing overflow-visible touch-none select-none"
+      className="relative w-full h-80 md:h-175 flex items-center justify-center cursor-grab active:cursor-grabbing overflow-visible touch-none select-none"
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
@@ -242,7 +242,7 @@ const TechSphere = ({ items }: { items: TechItem[] }) => {
 
 export default function TechStack() {
   return (
-    <section id="techstack" className="relative py-24 overflow-hidden">
+    <section id="techstack" className="relative py-12 md:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

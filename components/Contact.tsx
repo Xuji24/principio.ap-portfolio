@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative min-h-[80vh] py-24 px-6 lg:px-16 flex flex-col justify-center overflow-hidden">
+    <section id="contact" className="relative min-h-[60vh] md:min-h-[80vh] py-16 md:py-24 px-6 lg:px-16 flex flex-col justify-center overflow-hidden">
       <div className="max-w-7xl mx-auto w-full z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -19,7 +19,7 @@ export default function Contact() {
             What&apos;s Next?
           </span>
           
-          <h2 className="font-heading font-black text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-foreground mb-12 tracking-tighter hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-primary hover:to-secondary transition-all duration-500 cursor-default">
+          <h2 className="font-heading font-black text-4xl sm:text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-foreground mb-12 tracking-tighter hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-primary hover:to-secondary transition-all duration-500 cursor-default">
             LET&apos;S WORK
             <br />
             TOGETHER.
@@ -28,7 +28,7 @@ export default function Contact() {
           <div className="flex flex-col md:flex-row gap-12 md:items-center">
             <a
               href="mailto:principio.ap@gmail.com"
-              className="group relative inline-flex items-center gap-4 text-2xl md:text-4xl font-bold font-heading text-foreground"
+              className="group relative inline-flex items-center gap-2 md:gap-4 text-lg sm:text-2xl md:text-4xl font-bold font-heading text-foreground break-all md:break-normal"
             >
               <span>principio.ap@gmail.com</span>
               <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300 group-hover:text-primary" size={40} />

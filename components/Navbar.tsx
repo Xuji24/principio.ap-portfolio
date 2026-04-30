@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeSwitch from "./ThemeSwitch";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const navItems = [
   { name: "01 // home", href: "home" },
@@ -16,6 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,15 +35,26 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
-    if (pathname === "/") {
-      e.preventDefault();
-      document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
     }
-  };
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileMenuOpen]);
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      if (pathname === "/") {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        document.getElementById(href)?.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    [pathname],
+  );
 
   return (
     <nav
@@ -61,7 +73,8 @@ export default function Navbar() {
         </span>
       </Link>
 
-      <ul className="flex items-center gap-6 lg:gap-10">
+      {/* Desktop Nav */}
+      <ul className="hidden md:flex items-center gap-6 lg:gap-10">
         <ThemeSwitch />
         {navItems.map((item) => {
           const isActive = activeSection === item.href;
@@ -82,6 +95,62 @@ export default function Navbar() {
           );
         })}
       </ul>
+
+      {/* Mobile Controls */}
+      <div className="flex items-center gap-3 md:hidden">
+        <ThemeSwitch />
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle navigation menu"
+          className="relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 z-60"
+        >
+          <span
+            className={`block w-6 h-0.5 bg-foreground transition-all duration-300 origin-center ${
+              mobileMenuOpen ? "rotate-45 translate-y-1" : ""
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-foreground transition-all duration-300 ${
+              mobileMenuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`block w-6 h-0.5 bg-foreground transition-all duration-300 origin-center ${
+              mobileMenuOpen ? "-rotate-45 -translate-y-1" : ""
+            }`}
+          />
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 top-0 left-0 w-full h-dvh bg-background/95 backdrop-blur-xl z-50 flex flex-col items-center justify-center gap-8 transition-all duration-500 md:hidden ${
+          mobileMenuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {navItems.map((item, index) => {
+          const isActive = activeSection === item.href;
+          return (
+            <Link
+              key={item.name}
+              href={`#${item.href}`}
+              onClick={(e) => handleNavClick(e, item.href)}
+              className={`text-2xl font-mono tracking-wide transition-all duration-500 ${
+                isActive ? "text-primary" : "text-muted-foreground"
+              }`}
+              style={{
+                transitionDelay: mobileMenuOpen ? `${index * 75}ms` : "0ms",
+                transform: mobileMenuOpen ? "translateY(0)" : "translateY(20px)",
+                opacity: mobileMenuOpen ? 1 : 0,
+              }}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }

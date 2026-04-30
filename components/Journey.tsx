@@ -22,7 +22,7 @@ const experiences = [
 
 export default function Journey() {
   return (
-    <section id="journey" className="relative py-24 px-6 lg:px-16 bg-background overflow-hidden">
+    <section id="journey" className="relative py-16 md:py-24 px-6 lg:px-16 bg-background overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* Deep Cyan Radial Gradient for depth */}

@@ -28,7 +28,7 @@ const skills = [
 
 export default function Expertise() {
   return (
-    <section id="expertise" className="relative min-h-screen py-24 px-6 lg:px-16 overflow-hidden">
+    <section id="expertise" className="relative md:min-h-screen py-16 md:py-24 px-6 lg:px-16 overflow-hidden">
       {/* Background motifs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03] select-none text-foreground font-mono text-[20vw] leading-none font-black flex flex-col justify-between -z-10">
         <span className="-ml-10 mt-10">&lt;div&gt;</span>
