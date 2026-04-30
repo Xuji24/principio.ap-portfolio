@@ -17,7 +17,7 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-[600px] max-h-[600px] bg-primary/20 rounded-full blur-[120px] mix-blend-screen"
+        className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] max-w-150 max-h-150 bg-primary/20 rounded-full blur-[120px] mix-blend-screen"
       />
 
       {/* Secondary Purple Glow Orb */}
@@ -32,7 +32,7 @@ export default function BackgroundEffects() {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute bottom-[10%] right-[20%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] bg-secondary/20 rounded-full blur-[140px] mix-blend-screen"
+        className="absolute bottom-[10%] right-[20%] w-[50vw] h-[50vw] max-w-175 max-h-175 bg-secondary/20 rounded-full blur-[140px] mix-blend-screen"
       />
 
       {/* Floating Geometric Shape 1 */}

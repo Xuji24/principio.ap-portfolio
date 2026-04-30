@@ -71,7 +71,7 @@ export default function Projects() {
               {/* Project Image */}
               <div
                 className={`relative bg-muted overflow-hidden ${
-                  project.featured ? "lg:w-[55%] min-h-[300px]" : "h-64"
+                  project.featured ? "lg:w-[55%] min-h-75" : "h-64"
                 }`}
               >
                 <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />

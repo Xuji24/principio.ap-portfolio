@@ -15,11 +15,11 @@ export default function Contact() {
           className="flex flex-col items-start"
         >
           <span className="font-mono text-primary tracking-widest uppercase mb-6 flex items-center gap-4">
-            <div className="w-12 h-[1px] bg-primary" />
+            <div className="w-12 h-px bg-primary" />
             What&apos;s Next?
           </span>
           
-          <h2 className="font-heading font-black text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-foreground mb-12 tracking-tighter hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-primary hover:to-secondary transition-all duration-500 cursor-default">
+          <h2 className="font-heading font-black text-6xl md:text-8xl lg:text-[9rem] leading-[0.9] text-foreground mb-12 tracking-tighter hover:text-transparent hover:bg-clip-text hover:bg-linear-to-r hover:from-primary hover:to-secondary transition-all duration-500 cursor-default">
             LET&apos;S WORK
             <br />
             TOGETHER.
@@ -32,7 +32,7 @@ export default function Contact() {
             >
               <span>principio.ap@gmail.com</span>
               <ArrowUpRight className="group-hover:rotate-45 transition-transform duration-300 group-hover:text-primary" size={40} />
-              <div className="absolute -bottom-2 left-0 w-full h-[3px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
+              <div className="absolute -bottom-2 left-0 w-full h-0.75 bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500" />
             </a>
 
             <div className="flex gap-6 mt-4 md:mt-0">
@@ -48,7 +48,7 @@ export default function Contact() {
                   className="font-mono text-muted-foreground hover:text-foreground text-sm uppercase tracking-wider relative group"
                 >
                   {social.name}
-                  <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+                  <div className="absolute -bottom-1 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                 </a>
               ))}
             </div>

@@ -25,26 +25,40 @@ export default function Journey() {
     <section id="journey" className="relative py-24 px-6 lg:px-16 bg-background overflow-hidden">
       {/* Decorative Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        {/* Deep Cyan Radial Gradient for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,255,255,0.05)_0%,transparent_70%)]" />
+
+        {/* Subtle cyan grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-size-[32px_32px] mask-image:[radial-gradient(ellipse_at_center,black_40%,transparent_80%)]" />
         
-        {/* Glowing Orbs */}
+        {/* Layered Glowing Orbs for 3D Depth */}
         <motion.div
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1],
+            scale: [1, 1.1, 1],
+            opacity: [0.15, 0.25, 0.15],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] -right-[10%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[120px]"
+          className="absolute top-[10%] -right-[5%] w-125 h-125 rounded-full bg-cyan-500/20 blur-[120px]"
         />
         <motion.div
           animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.1, 0.3, 0.1],
+            scale: [1, 1.3, 1],
+            opacity: [0.1, 0.2, 0.1],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="absolute top-[40%] -left-[10%] w-96 h-96 rounded-full bg-primary/20 blur-[100px]"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.1, 0.25, 0.1],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-[-10%] -left-[10%] w-[600px] h-[600px] rounded-full bg-primary/10 blur-[150px]"
+          className="absolute bottom-[-10%] right-[10%] w-150 h-150 rounded-full bg-cyan-600/10 blur-[150px]"
         />
+        
+        {/* Deep gradient overlay at the bottom for smooth transition */}
+        <div className="absolute bottom-0 left-0 w-full h-1/3 bg-linear-to-t from-background via-background/80 to-transparent" />
       </div>
 
       <div className="max-w-4xl mx-auto relative z-10">
@@ -75,7 +89,7 @@ export default function Journey() {
               className="relative mb-16 last:mb-0"
             >
               {/* Timeline dot */}
-              <div className="absolute -left-[41px] md:-left-[57px] top-1 p-2 bg-background border-2 border-primary rounded-full">
+              <div className="absolute -left-10.25 md:-left-14.25 top-1 p-2 bg-background border-2 border-primary rounded-full">
                 <Briefcase size={16} className="text-primary" />
               </div>
 
