@@ -16,7 +16,7 @@ const skills = [
   },
   {
     title: "Database Management",
-    description: "Structuring robust data models and optimizing queries using PostgreSQL, and Supabase.",
+    description: "Structuring robust data models and optimizing queries using MySQL, PostgreSQL, and Supabase.",
     icon: Database,
   },
   {
