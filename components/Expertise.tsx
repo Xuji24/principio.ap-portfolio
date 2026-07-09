@@ -16,7 +16,7 @@ const skills = [
   },
   {
     title: "Database Management",
-    description: "Structuring robust data models and optimizing queries using PostgreSQL, MongoDB, and Supabase.",
+    description: "Structuring robust data models and optimizing queries using MySQL, PostgreSQL, and Supabase.",
     icon: Database,
   },
   {
@@ -65,15 +65,15 @@ export default function Expertise() {
                 <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[linear-gradient(45deg,transparent_45%,rgba(0,255,255,0.02)_50%,transparent_55%)] bg-length:[12px_12px] opacity-40 z-0 pointer-events-none" />
                 <div className="hidden md:block absolute -bottom-10 -right-10 w-48 h-48 bg-cyan-500/10 rounded-full blur-[50px] z-0 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="hidden md:block absolute -top-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl z-0 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 <div className="w-16 h-16 rounded-full bg-card border border-border flex items-center justify-center mb-6 shadow-[0_10px_30px_rgba(0,0,0,0.5)] relative z-10 group-hover:border-cyan-500/50 transition-colors duration-500 group-hover:scale-110">
                   <Icon size={28} className="text-cyan-400" />
                 </div>
-                
+
                 <h3 className="text-2xl font-bold font-heading mb-4 tracking-tight group-hover:text-cyan-400 transition-colors relative z-10 text-foreground">
                   {skill.title}
                 </h3>
-                
+
                 <p className="text-muted-foreground font-sans leading-relaxed relative z-10">
                   {skill.description}
                 </p>
