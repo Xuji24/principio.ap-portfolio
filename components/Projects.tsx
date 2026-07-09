@@ -23,14 +23,32 @@ const projects = [
     featured: false,
     image: "/PUPEduTrack.png"
   },
+  // {
+  //   title: "Stoutcafe",
+  //   description: "A visually appealing landing page and interactive system for a modern cafe.",
+  //   tech: ["HTML", "CSS", "JavaScript"],
+  //   github: "https://github.com/julsmartinez/STOUTCAFE",
+  //   live: "https://julsmartinez.github.io/STOUTCAFE/",
+  //   featured: false,
+  //   image: "/stoutcafe.png"
+  // },
   {
-    title: "Stoutcafe",
-    description: "A visually appealing landing page and interactive system for a modern cafe.",
-    tech: ["HTML", "CSS", "JavaScript"],
-    github: "https://github.com/julsmartinez/STOUTCAFE",
-    live: "https://julsmartinez.github.io/STOUTCAFE/",
+    title: "ThesisIT",
+    description: "A web application designed to help students prepare for their thesis defense allowing them to practice, analyze document weaknesses, and real-time feedback, and chat with AI for guidance.",
+    tech: ["React.js", "Vite", "Express.js", "Tailwind", "TypeScript"],
+    github: "https://github.com/Xuji24/ThesisIT",
+    live: "https://thesisit.vercel.app/",
     featured: false,
-    image: "/stoutcafe.png"
+    image: "/thesisit.png"
+  },
+  {
+    title: "StayQualifAI",
+    description: "An AI assisted web application that guides user to prepare for job, from resume building, interview preparation, job searching, and upskilling certifications.",
+    tech: ["React.js", "Node.js", "Express.js", "Tailwind", "Typescript", "PostgreSQL", "Supabase"],
+    github: "https://github.com/Xuji24/Boji-AI",
+    live: "https://stayqualifai.vercel.app/",
+    featured: false,
+    image: "/stayqualifai.png"
   }
 ];
 
