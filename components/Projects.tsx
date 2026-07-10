@@ -12,16 +12,16 @@ const projects = [
     github: "https://github.com/Xuji24/d.creatives",
     live: "https://d-creatives.online",
     featured: true,
-    image: "/booking-app-screenshot.png"
+    image: "/dcreatives.png"
   },
   {
     title: "PUP Edu Track",
-    description: "An educational tracking and management system designed for students and faculty. Note: This project is currently hosted locally only.",
+    description: "An educational tracking and management system designed for students and faculty.",
     tech: ["C#", "MySQL"],
     github: "#",
     live: "#",
     featured: false,
-    image: "/PUPEduTrack.png"
+    image: "/PUP-EduTrack.png"
   },
   // {
   //   title: "Stoutcafe",
@@ -92,7 +92,7 @@ export default function Projects() {
                   project.featured ? "lg:w-[55%] min-h-75" : "h-64"
                 }`}
               >
-                <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+                <div className="absolute inset-0 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
                 <Image
                   src={project.image}
                   alt={project.title}
