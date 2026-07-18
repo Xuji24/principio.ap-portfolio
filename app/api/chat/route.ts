@@ -10,7 +10,17 @@ export const runtime = "nodejs";
 // site that calls your /api/chat directly. It does NOT stop someone calling
 // this endpoint with curl/Postman (they can set any header they like) — for
 // that you'd need a CAPTCHA (e.g. Cloudflare Turnstile) or real auth.
-const ALLOWED_ORIGIN = process.env.SITE_URL || "http://localhost:3000";
+//
+// Resolution order:
+// 1. SITE_URL — set this yourself if you're using a custom domain (e.g. angeloprincipio.dev)
+// 2. VERCEL_PROJECT_PRODUCTION_URL — Vercel sets this automatically for the production deployment
+// 3. VERCEL_URL — Vercel sets this automatically for preview/branch deployments
+// 4. localhost:3000 — local dev fallback
+const ALLOWED_ORIGIN =
+  process.env.SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
+  "http://localhost:3000";
 
 function isAllowedOrigin(req: NextRequest): boolean {
   const origin = req.headers.get("origin") || req.headers.get("referer");
