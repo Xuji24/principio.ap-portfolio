@@ -23,15 +23,6 @@ const projects = [
     featured: false,
     image: "/PUP-EduTrack.png"
   },
-  // {
-  //   title: "Stoutcafe",
-  //   description: "A visually appealing landing page and interactive system for a modern cafe.",
-  //   tech: ["HTML", "CSS", "JavaScript"],
-  //   github: "https://github.com/julsmartinez/STOUTCAFE",
-  //   live: "https://julsmartinez.github.io/STOUTCAFE/",
-  //   featured: false,
-  //   image: "/stoutcafe.png"
-  // },
   {
     title: "ThesisIT",
     description: "A web application designed to help students prepare for their thesis defense allowing them to practice, analyze document weaknesses, and real-time feedback, and chat with AI for guidance.",
@@ -49,6 +40,15 @@ const projects = [
     live: "https://stayqualifai.vercel.app/",
     featured: false,
     image: "/stayqualifai.png"
+  },
+  {
+    title: "Fitra",
+    description: "A running and fitness web application that allows users to join running events, track their progress, and connect with other fitness enthusiasts.",
+    tech: ["Next.js", "Node.js", "Express.js", "Tailwind", "TypeScript", "PostgreSQL", "Supabase"],
+    github: "https://github.com/Xuji24/Fitra",
+    live: "fitra.vercel.app",
+    featured: false,
+    image: "/Fitra.png"
   }
 ];
 

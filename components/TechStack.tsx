@@ -1,106 +1,58 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
+import LogoLoop, { type LogoLoopItem } from "@/components/LogoLoop";
 
-const Cloud = dynamic(() => import("react-icon-cloud").then((mod) => mod.Cloud), {
-  ssr: false,
+const toLogo = (name: string, icon: string): LogoLoopItem => ({
+  src: icon,
+  alt: name,
+  title: name,
 });
 
-type TechItem = {
-  name: string;
-  icon?: string;
-  isExternal?: boolean;
-  isTextOnly?: boolean;
-};
+const textLogo = (name: string): LogoLoopItem => ({
+  node: (
+    <span className="text-xs font-semibold px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary whitespace-nowrap">
+      {name}
+    </span>
+  ),
+  title: name,
+  ariaLabel: name,
+});
 
-const languages: TechItem[] = [
-  { name: "TypeScript", icon: "/Typescript.png" },
-  { name: "HTML5", icon: "/HTML.png" },
-  { name: "CSS3", icon: "/CSS.png" },
-  { name: "JavaScript", icon: "/Javascript.png" },
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", isExternal: true },
+const languages: LogoLoopItem[] = [
+  toLogo("TypeScript", "/Typescript.png"),
+  toLogo("HTML5", "/HTML.png"),
+  toLogo("CSS3", "/CSS.png"),
+  toLogo("JavaScript", "/Javascript.png"),
+  toLogo("Python", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"),
 ];
 
-const frameworks: TechItem[] = [
-  { name: "Next.js", icon: "/NextJS.png" },
-  { name: "React", icon: "/ReactJs.png" },
-  { name: "Node.js", icon: "/NodeJs.png" },
-  { name: "Express", icon: "/expressjs-light.png" },
-  { name: "Tailwind CSS", icon: "/tailwindcss.png" },
-  { name: "jQuery", icon: "/Jquery.png" },
-  { name: "FastAPI", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg", isExternal: true },
+const frameworks: LogoLoopItem[] = [
+  toLogo("Next.js", "/NextJS.png"),
+  toLogo("React", "/ReactJs.png"),
+  toLogo("Node.js", "/NodeJs.png"),
+  toLogo("Express", "/expressjs-light.png"),
+  toLogo("Tailwind CSS", "/tailwindcss.png"),
+  toLogo("jQuery", "/Jquery.png"),
+  toLogo("FastAPI", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg"),
 ];
 
-const integrations: TechItem[] = [
-  { name: "PostgreSQL", icon: "/PostgreSQL.png" },
-  { name: "MySQL", icon: "/MySQL.png" },
-  { name: "Supabase", icon: "/Supabase.png" },
-  { name: "RESTful API", isTextOnly: true },
-  { name: "Claude AI", icon: "/anthropic.svg", isExternal: false },
-  { name: "Antigravity", icon: "/antigravity-color.svg", isExternal: false },
-  { name: "Gemini", icon: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg", isExternal: true },
-  { name: "GitHub Copilot", icon: "/githubcopilot.svg", isExternal: false },
+const integrations: LogoLoopItem[] = [
+  toLogo("PostgreSQL", "/PostgreSQL.png"),
+  toLogo("MySQL", "/MySQL.png"),
+  toLogo("Supabase", "/Supabase.png"),
+  textLogo("RESTful API"),
+  toLogo("Claude AI", "/anthropic.svg"),
+  toLogo("Antigravity", "/antigravity-color.svg"),
+  toLogo("Gemini", "https://upload.wikimedia.org/wikipedia/commons/8/8a/Google_Gemini_logo.svg"),
+  toLogo("GitHub Copilot", "/githubcopilot.svg"),
 ];
 
-const allTech = [...languages, ...frameworks, ...integrations];
-
-const TechSphere = ({ items }: { items: TechItem[] }) => {
-  const icons = useMemo(() => {
-    return items.map((item, i) => {
-      if (item.isTextOnly) {
-        return (
-          <a key={i} href="#" onClick={(e) => e.preventDefault()} title={item.name}>
-            {item.name}
-          </a>
-        );
-      }
-      return (
-        <a key={i} href="#" onClick={(e) => e.preventDefault()} title={item.name}>
-          <img src={item.icon as string} alt={item.name} height={42} width={42} crossOrigin="anonymous" />
-        </a>
-      );
-    });
-  }, [items]);
-
-  return (
-    <div className="relative w-full h-[350px] md:h-[600px] flex items-center justify-center overflow-visible touch-none select-none">
-      <Cloud
-        containerProps={{
-          style: {
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: "100%",
-          },
-        }}
-        options={{
-          reverse: true,
-          depth: 1,
-          wheelZoom: false,
-          imageScale: 2,
-          activeCursor: "default",
-          tooltip: "native",
-          initial: [0.1, -0.1],
-          clickToFront: 500,
-          tooltipDelay: 0,
-          outlineColour: "#0000",
-          maxSpeed: 0.04,
-          minSpeed: 0.02,
-          dragControl: true,
-          textColour: "#06b6d4",
-          textHeight: 22,
-          textFont: "Montserrat, sans-serif",
-          imagePadding: 10,
-        }}
-      >
-        {icons}
-      </Cloud>
-    </div>
-  );
-};
+const rows = [
+  { items: [...languages, ...frameworks.slice(0, 5)], direction: "left" as const },
+  { items: [...frameworks.slice(5), ...integrations], direction: "right" as const },
+];
 
 export default function TechStack() {
   return (
@@ -123,8 +75,20 @@ export default function TechStack() {
         </motion.div>
       </div>
 
-      <div className="w-full flex items-center justify-center mt-12 md:mt-0">
-        <TechSphere items={allTech} />
+      <div className="max-w-7xl mx-auto px-6 lg:px-16 flex flex-col gap-6 md:gap-10 overflow-hidden">
+        {rows.map((row, i) => (
+          <LogoLoop
+            key={i}
+            logos={row.items}
+            direction={row.direction}
+            speed={40}
+            logoHeight={40}
+            gap={48}
+            pauseOnHover
+            scaleOnHover
+            ariaLabel="Tech stack logos"
+          />
+        ))}
       </div>
     </section>
   );

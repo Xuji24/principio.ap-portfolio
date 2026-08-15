@@ -3,6 +3,7 @@ import { Montserrat, Inter, Fira_Code } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/ThemeProvider";
 import BackgroundEffects from "@/components/BackgroundEffects";
+import {ChatbotHeader} from "@/components/ui/ChatbotHeader";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
   description:
     "Full-Stack Web Developer Portfolio showcasing projects and skills.",
   icons: {
-    icon: "/public/angelo_principio_portfolio.ico",
+    icon: "/icon.svg",
   },
 };
 
