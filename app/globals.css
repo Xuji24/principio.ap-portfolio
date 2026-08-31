@@ -103,6 +103,15 @@ body::before {
   .animate-slide-in-right { animation: slideInRight 0.6s ease-out; }
   .animate-float          { animation: float 3s ease-in-out infinite; }
   .animate-glow-pulse     { animation: glowPulse 2.5s ease-in-out infinite; }
+
+  /* Scrollable but scrollbar-free — content still scrolls via wheel/touch/drag */
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* =====================================================

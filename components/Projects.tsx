@@ -46,7 +46,7 @@ const projects = [
     description: "A running and fitness web application that allows users to join running events, track their progress, and connect with other fitness enthusiasts.",
     tech: ["Next.js", "Node.js", "Express.js", "Tailwind", "TypeScript", "PostgreSQL", "Supabase"],
     github: "https://github.com/Xuji24/Fitra",
-    live: "be-fit-era.vercel.app",
+    live: "https://be-fit-era.vercel.app",
     featured: false,
     image: "/be-fit-era-mockup.png"
   },
@@ -57,7 +57,7 @@ const projects = [
     github: "https://github.com/Xuji24/boji-ai",
     live: "https://boji-ai.vercel.app/",
     featured: false,
-    image: "#"
+    image: "/boji-ai-mockup.png"
   },
 ];
 

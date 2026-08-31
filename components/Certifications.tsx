@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { Award, Plus, X } from "lucide-react";
+import Image from "next/image";
 
 // Server-rendered <img> tags can finish erroring before React hydrates and
 // attaches the onError listener, so the event is missed. Checking
@@ -29,10 +30,12 @@ function CertImage({
   }, [src]);
 
   return (
-    <img
+    <Image
       ref={imgRef}
       src={src}
       alt={alt}
+      fill
+      sizes="(max-width: 768px) 90vw, (max-width: 1024px) 45vw, 30vw"
       onError={onBroken}
       className={className}
       draggable={false}
@@ -49,80 +52,104 @@ interface Certification {
   description: string;
 }
 
-// Placeholder entries — swap `image` for the real certificate file in /public/certificates/
-// and fill in the actual `date` once available.
 const certifications: Certification[] = [
   {
     id: "salesforce-internship",
     title: "Salesforce Supported Virtual Internship Program",
     issuer: "Salesforce (Philippines)",
-    date: "2025",
-    image: "/certificates/salesforce-internship.png",
+    date: "January 2025",
+    image: "/Salesforce.png",
     description:
-      "Completed a virtual internship program focused on Salesforce fundamentals, guided by industry mentors through hands-on project work within the Philippine developer community.",
+      "Hands-on virtual internship covering Salesforce fundamentals, mentored by industry professionals within the Philippine developer community.",
   },
   {
     id: "cisco-modern-ai",
     title: "Introduction to Modern AI",
     issuer: "Cisco Networking Academy",
-    date: "Month Year",
-    image: "/certificates/cisco-modern-ai.png",
+    date: "September 2025",
+    image: "/Introduction_to_Modern_AI.png",
     description:
-      "Covered the fundamentals of modern artificial intelligence, including machine learning concepts, real-world applications, and responsible AI practices.",
+      "Fundamentals of modern AI, covering machine learning concepts, real-world applications, and responsible AI practices.",
   },
   {
     id: "cisco-cybersecurity",
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy",
-    date: "Month Year",
-    image: "/certificates/cisco-cybersecurity.png",
+    date: "April 2025",
+    image: "/cybersecurity.png",
     description:
-      "Introduced core cybersecurity concepts, common threats, and best practices for protecting data, devices, and networks.",
+      "Core cybersecurity concepts, common threats, and best practices for protecting data, devices, and networks.",
   },
   {
     id: "cisco-python-essentials",
     title: "Python Essentials 1",
     issuer: "Cisco Networking Academy",
-    date: "Month Year",
-    image: "/certificates/cisco-python-essentials-1.png",
+    date: "July 2026",
+    image: "/Python_Essentials_1.png",
     description:
-      "Covered foundational Python programming concepts including data types, control flow, functions, and basic data structures.",
+      "Foundational Python programming: data types, control flow, functions, and basic data structures.",
   },
   {
-    id: "placeholder-5",
-    title: "Certification Title",
-    issuer: "Issuing Organization",
-    date: "Month Year",
-    image: "/certificates/certificate-5.png",
-    description: "Add a short description of this certificate here.",
+    id: "google-ai-fundamentals",
+    title: "AI Fundamentals",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-fundamentals.jpeg",
+    description:
+      "Core AI concepts — LLMs, training data, models and agents, and effective prompting — with hands-on practice using Gemini.",
+  },
+  {
+    id: "ai-brainstorming-and-planning",
+    title: "AI for Brainstorming and Planning",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-brainstorm-and-planning.png",
+    description:
+      "Using AI to brainstorm concepts, build detailed timelines, and organize a clear plan for any goal.",
+  },
+  {
+    id: "ai-research-and-insights",
+    title: "AI for Research and Insights",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-research-and-insights.png",
+    description:
+      "Advanced research workflows: evidence-based problem-solving with Gemini Deep Research, synthesizing dense documentation into focused knowledge bases with NotebookLM, and engineering AI personas for expert-level reviews.",
+  },
+  {
+    id: "ai-writing-and-communicating",
+    title: "AI for Writing and Communicating",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-writing-communicating.png",
+    description:
+      "AI-assisted professional communication: stakeholder-specific messaging with Gemini Canvas, pressure-testing ideas through multi-stage HR/technical/director interviews, and refining real-time verbal communication with Gemini Live.",
+  },
+  {
+    id: "ai-content-creation",
+    title: "AI for Content Creation",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-content-creation.png",
+    description:
+      "Streamlining product presentation and UI asset generation: multimodal AI for intro videos, Gemini Canvas for turning documentation into stakeholder slide decks, precise prompt engineering for UI graphics, and AI-driven feedback loops for visual assets.",
+  },
+  {
+    id: "ai-data-analysis",
+    title: "AI for Data Analysis",
+    issuer: "Google",
+    date: "August 2026",
+    image: "/ai-data-analysis.png",
+    description:
+      "Extracting and visualizing business intelligence: defining key performance metrics, converting unstructured assets into queryable data with NLP and Sheets' =AI() function, and simulating business impact with Gemini Canvas for stakeholder dashboards.",
   },
 ];
 
-const COUNT = certifications.length;
-
-// Shortest signed distance from `active` to `index` on a ring of size COUNT.
-function ringOffset(index: number, active: number) {
-  let diff = (index - active) % COUNT;
-  if (diff > COUNT / 2) diff -= COUNT;
-  if (diff < -COUNT / 2) diff += COUNT;
-  return diff;
-}
+const MORPH_TRANSITION = { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const };
 
 export default function Certifications() {
-  const [active, setActive] = useState(0);
   const [selected, setSelected] = useState<Certification | null>(null);
   const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
-
-  const goPrev = useCallback(() => setActive((i) => (i - 1 + COUNT) % COUNT), []);
-  const goNext = useCallback(() => setActive((i) => (i + 1) % COUNT), []);
-
-  const handleCardClick = (index: number, cert: Certification) => {
-    if (index === active) {
-      setSelected(cert);
-    } else {
-      setActive(index);
-    }
-  };
 
   const markBroken = (id: string) => {
     setBrokenImages((prev) => new Set(prev).add(id));
@@ -160,107 +187,65 @@ export default function Certifications() {
           </p>
         </motion.div>
 
-        {/* Carousel */}
-        <div className="relative flex items-center justify-center">
-          <button
-            type="button"
-            onClick={goPrev}
-            aria-label="Previous certificate"
-            className="absolute left-0 z-20 p-2.5 md:p-3 rounded-full border border-border bg-card/60 backdrop-blur-md text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 cursor-pointer"
-          >
-            <ChevronLeft size={20} />
-          </button>
-
-          <div
-            className="relative w-full h-[280px] md:h-[340px] flex items-center justify-center"
-            style={{ perspective: "1400px" }}
-          >
-            {certifications.map((cert, index) => {
-              const offset = ringOffset(index, active);
-              const absOffset = Math.abs(offset);
-              const isCenter = offset === 0;
-              const isVisible = absOffset <= 2;
-
-              const translateX = `calc(${offset} * min(32vw, 240px))`;
-              const rotateY = -offset * 28;
-              const scale = 1 - absOffset * 0.16;
-              const opacity = isVisible ? 1 - absOffset * 0.28 : 0;
-              const zIndex = 10 - absOffset;
-              const isBroken = brokenImages.has(cert.id);
-
-              return (
-                <div
-                  key={cert.id}
-                  onClick={() => handleCardClick(index, cert)}
-                  className="absolute left-1/2 top-1/2 cursor-pointer"
-                  style={{
-                    transform: `translate(-50%, -50%) translateX(${translateX}) rotateY(${rotateY}deg) scale(${scale})`,
-                    zIndex,
-                    opacity,
-                    pointerEvents: isVisible ? "auto" : "none",
-                    transition:
-                      "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease",
-                    transformStyle: "preserve-3d",
-                  }}
+        {/* Modal cards grid — scrolls internally with the scrollbar hidden */}
+        <div className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 max-h-[70vh] overflow-y-auto scrollbar-hidden pr-1 pb-1">
+          {certifications.map((cert, index) => {
+            const isBroken = brokenImages.has(cert.id);
+            return (
+              <motion.div
+                key={cert.id}
+                layoutId={`cert-card-${cert.id}`}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
+                onClick={() => setSelected(cert)}
+                className="group relative flex flex-col rounded-2xl border border-border bg-card/60 backdrop-blur-md overflow-hidden cursor-pointer transition-colors duration-300 hover:border-primary/50 hover:shadow-[0_0_32px_rgba(0,229,255,0.12)]"
+              >
+                <motion.div
+                  layoutId={`cert-image-${cert.id}`}
+                  className="relative w-full aspect-video bg-black/30 flex items-center justify-center"
                 >
-                  <div
-                    className={`group relative w-56 h-36 md:w-72 md:h-44 lg:w-80 lg:h-48 rounded-2xl border overflow-hidden bg-card/60 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-[1.03] ${
-                      isCenter
-                        ? "border-primary/50 hover:shadow-[0_0_32px_rgba(0,229,255,0.18)]"
-                        : "border-border hover:border-primary/40"
-                    }`}
-                  >
-                    {!isBroken ? (
-                      <CertImage
-                        src={cert.image}
-                        alt={cert.title}
-                        onBroken={() => markBroken(cert.id)}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-linear-to-br from-primary/10 via-transparent to-secondary/10">
-                        <Award className="text-primary/70" size={isCenter ? 36 : 26} />
-                      </div>
-                    )}
+                  {!isBroken ? (
+                    <CertImage
+                      src={cert.image}
+                      alt={cert.title}
+                      onBroken={() => markBroken(cert.id)}
+                      className="object-contain p-3"
+                    />
+                  ) : (
+                    <Award className="text-primary/70" size={32} />
+                  )}
+                </motion.div>
 
-                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/10 to-transparent" />
+                <button
+                  type="button"
+                  aria-label="View details"
+                  className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-background/70 backdrop-blur-md border border-border text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-300"
+                >
+                  <Plus size={16} />
+                </button>
 
-                    <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                      <p
-                        className={`font-heading font-bold text-white leading-tight ${
-                          isCenter ? "text-sm md:text-base" : "text-xs md:text-sm line-clamp-2"
-                        }`}
-                      >
-                        {cert.title}
-                      </p>
-                      <p className="font-mono text-[10px] md:text-xs text-white/70 mt-1">
-                        {cert.issuer}
-                      </p>
-                    </div>
-
-                    {isCenter && (
-                      <span className="absolute top-3 right-3 text-[10px] font-mono px-2 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        View details
-                      </span>
-                    )}
-                  </div>
+                <div className="p-4 md:p-5">
+                  <p className="font-heading font-bold text-sm md:text-base text-foreground leading-tight mb-1">
+                    {cert.title}
+                  </p>
+                  <p className="font-mono text-[10px] md:text-xs text-muted-foreground">
+                    {cert.issuer} &middot; {cert.date}
+                  </p>
                 </div>
-              );
-            })}
+              </motion.div>
+            );
+          })}
           </div>
 
-          <button
-            type="button"
-            onClick={goNext}
-            aria-label="Next certificate"
-            className="absolute right-0 z-20 p-2.5 md:p-3 rounded-full border border-border bg-card/60 backdrop-blur-md text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 cursor-pointer"
-          >
-            <ChevronRight size={20} />
-          </button>
+          {/* Fade hint — signals more content below since the scrollbar is hidden */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent" />
         </div>
       </div>
 
-      {/* Detail popup */}
+      {/* Detail modal */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -272,47 +257,48 @@ export default function Certifications() {
             className="fixed inset-0 z-100 flex items-center justify-center p-6 bg-background/90 backdrop-blur-sm"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 12 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              layoutId={`cert-card-${selected.id}`}
+              transition={MORPH_TRANSITION}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-lg bg-card border border-border rounded-2xl p-6 md:p-8 shadow-xl"
+              className="relative w-full max-w-2xl bg-card border border-border rounded-2xl overflow-y-auto shadow-xl max-h-[85vh]"
             >
               <button
                 type="button"
                 onClick={() => setSelected(null)}
                 aria-label="Close"
-                className="absolute top-4 right-4 p-1.5 rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors cursor-pointer"
+                className="absolute top-4 right-4 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-background/70 backdrop-blur-md border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>
 
-              <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-border mb-5 bg-linear-to-br from-primary/10 via-transparent to-secondary/10">
+              <motion.div
+                layoutId={`cert-image-${selected.id}`}
+                className="relative w-full aspect-video min-h-40 bg-black/30 flex items-center justify-center"
+              >
                 {!brokenImages.has(selected.id) ? (
                   <CertImage
                     src={selected.image}
                     alt={selected.title}
                     onBroken={() => markBroken(selected.id)}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="object-contain p-4"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Award className="text-primary/70" size={40} />
-                  </div>
+                  <Award className="text-primary/70" size={40} />
                 )}
-              </div>
+              </motion.div>
 
-              <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground tracking-tight mb-1">
-                {selected.title}
-              </h3>
-              <p className="font-heading text-primary font-medium mb-3">{selected.issuer}</p>
-              <span className="inline-block px-3 py-1 bg-primary/10 text-primary font-mono text-xs rounded-full border border-primary/20 mb-4">
-                {selected.date}
-              </span>
-              <p className="text-foreground/80 leading-relaxed font-sans text-sm md:text-base">
-                {selected.description}
-              </p>
+              <div className="p-6 md:p-8">
+                <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground tracking-tight mb-1">
+                  {selected.title}
+                </h3>
+                <p className="font-heading text-primary font-medium mb-3">{selected.issuer}</p>
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary font-mono text-xs rounded-full border border-primary/20 mb-4">
+                  {selected.date}
+                </span>
+                <p className="text-foreground/80 leading-relaxed font-sans text-sm md:text-base">
+                  {selected.description}
+                </p>
+              </div>
             </motion.div>
           </motion.div>
         )}
