@@ -26,6 +26,7 @@ const languages: LogoLoopItem[] = [
   toLogo("CSS3", "/CSS.png"),
   toLogo("JavaScript", "/Javascript.png"),
   toLogo("Python", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"),
+  toLogo("Java", "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"),
 ];
 
 const frameworks: LogoLoopItem[] = [
