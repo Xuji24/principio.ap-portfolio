@@ -6,6 +6,8 @@ import BackgroundEffects from "@/components/BackgroundEffects";
 import {ChatbotHeader} from "@/components/ui/ChatbotHeader";
 import "./globals.css";
 import PortfolioChatbot from "@/components/PortfolioChatbot";
+import VisitorTracker from "@/components/VisitorTracker";
+import Footer from "@/components/Footer";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -47,7 +49,9 @@ export default function RootLayout({
           <BackgroundEffects />
           <Navbar />
           {children}
+          <Footer />
           <PortfolioChatbot />
+          <VisitorTracker />
         </Providers>
       </body>
     </html>
