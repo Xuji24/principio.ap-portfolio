@@ -33,15 +33,6 @@ const projects = [
     image: "/thesisit.png"
   },
   {
-    title: "StayQualifAI",
-    description: "AI assisted web application that guides user to prepare for job, from resume building, interview preparation, job searching, and upskilling certifications. This project is an MVP created with teams",
-    tech: ["React.js", "Node.js", "Express.js", "Tailwind", "Typescript", "PostgreSQL", "Supabase"],
-    github: "https://github.com/Xuji24/Boji-AI",
-    live: "https://stayqualifai.vercel.app/",
-    featured: false,
-    image: "/stayqualifai.png"
-  },
-  {
     title: "Be Fit Era",
     description: "A running and fitness web application that allows users to join running events, track their progress, and connect with other fitness enthusiasts.",
     tech: ["Next.js", "Node.js", "Express.js", "Tailwind", "TypeScript", "PostgreSQL", "Supabase"],
@@ -52,7 +43,7 @@ const projects = [
   },
   {
     title: "Boji-AI",
-    description: "An AI assisted web application that guides user to prepare for job, from resume building, interview preparation, job searching, and upskilling certifications.",
+    description: "An AI-powered web application allowing user to prepare for job from start to finish, from resume building, interview preparation, job searching, and upskilling certifications.",
     tech: ["React.js", "Node.js", "Express.js", "Tailwind", "Typescript", "PostgreSQL", "Supabase"],
     github: "https://github.com/Xuji24/boji-ai",
     live: "https://boji-ai.vercel.app/",
