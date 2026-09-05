@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Award, Plus, X } from "lucide-react";
+import { Award, Maximize2, X } from "lucide-react";
 import Image from "next/image";
 
 // Server-rendered <img> tags can finish erroring before React hydrates and
@@ -205,14 +205,14 @@ export default function Certifications() {
               >
                 <motion.div
                   layoutId={`cert-image-${cert.id}`}
-                  className="relative w-full aspect-video bg-black/30 flex items-center justify-center"
+                  className="relative w-full aspect-video bg-linear-to-br from-primary/50 to-secondary/10 flex items-center justify-center"
                 >
                   {!isBroken ? (
                     <CertImage
                       src={cert.image}
                       alt={cert.title}
                       onBroken={() => markBroken(cert.id)}
-                      className="object-contain p-3"
+                      className="object-contain p-3 w-full h-full transition-transform duration-500 ease-in-out hover:scale-105"
                     />
                   ) : (
                     <Award className="text-primary/70" size={32} />
@@ -224,7 +224,7 @@ export default function Certifications() {
                   aria-label="View details"
                   className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-background/70 backdrop-blur-md border border-border text-muted-foreground group-hover:text-primary group-hover:border-primary/50 transition-colors duration-300"
                 >
-                  <Plus size={16} />
+                  <Maximize2 size={16} />
                 </button>
 
                 <div className="p-4 md:p-5">
@@ -273,7 +273,7 @@ export default function Certifications() {
 
               <motion.div
                 layoutId={`cert-image-${selected.id}`}
-                className="relative w-full aspect-video min-h-40 bg-black/30 flex items-center justify-center"
+                className="relative w-full aspect-video min-h-40 bg-linear-to-br from-primary/50 to-secondary/10 flex items-center justify-center"
               >
                 {!brokenImages.has(selected.id) ? (
                   <CertImage

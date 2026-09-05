@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send, Sparkles, Clock } from "lucide-react";
+import { MessageCircle, X, Send, Clock } from "lucide-react";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -236,7 +236,7 @@ export default function PortfolioChatbot() {
                    transition-all duration-200 font-medium text-sm"
         aria-label={isOpen ? "Close portfolio chat" : "Open portfolio chat"}
       >
-        {isOpen ? <X size={18} /> : <Sparkles size={18} />}
+        {isOpen && <X size={18} />}
         {isOpen ? "Close" : "Ask about Angelo"}
         {!isOpen && <MessageCircle size={18} className="ml-0.5" />}
       </button>

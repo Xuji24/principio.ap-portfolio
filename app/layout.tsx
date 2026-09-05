@@ -7,7 +7,8 @@ import {ChatbotHeader} from "@/components/ui/ChatbotHeader";
 import "./globals.css";
 import PortfolioChatbot from "@/components/PortfolioChatbot";
 import VisitorTracker from "@/components/VisitorTracker";
-import Footer from "@/components/Footer";
+import VisitCounterBadge from "@/components/VisitCounterBadge";
+import { createClient } from "@/lib/supabase/server";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -34,11 +35,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc("page_view_count");
+  const viewCount = typeof data === "number" ? data : 0;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -48,8 +53,8 @@ export default function RootLayout({
         <Providers>
           <BackgroundEffects />
           <Navbar />
+          <VisitCounterBadge viewCount={viewCount} />
           {children}
-          <Footer />
           <PortfolioChatbot />
           <VisitorTracker />
         </Providers>
