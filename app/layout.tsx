@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
-import Navbar from "@/components/Navbar";
 import Providers from "@/components/ThemeProvider";
-import BackgroundEffects from "@/components/BackgroundEffects";
 import {ChatbotHeader} from "@/components/ui/ChatbotHeader";
 import "./globals.css";
 import PortfolioChatbot from "@/components/PortfolioChatbot";
@@ -51,8 +49,6 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <Providers>
-          <BackgroundEffects />
-          <Navbar />
           <VisitCounterBadge viewCount={viewCount} />
           {children}
           <PortfolioChatbot />
