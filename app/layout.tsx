@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Montserrat, Inter, Fira_Code } from "next/font/google";
+import { Outfit, Inter, JetBrains_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/ThemeProvider";
 import BackgroundEffects from "@/components/BackgroundEffects";
@@ -10,20 +10,20 @@ import VisitorTracker from "@/components/VisitorTracker";
 import VisitCounterBadge from "@/components/VisitCounterBadge";
 import { createClient } from "@/lib/supabase/server";
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
+  weight: ["500", "600", "700", "800"],
 });
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
-
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
+const jetbrains = JetBrains_Mono({
+  variable: "--font-mono-jb",
   subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${montserrat.variable} ${inter.variable} ${firaCode.variable} font-sans bg-background text-foreground antialiased transition-colors duration-300 overflow-x-hidden selection:bg-primary/30 selection:text-primary`}
+        className={`${outfit.variable} ${inter.variable} ${jetbrains.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <Providers>
