@@ -43,3 +43,5 @@ next-env.d.ts
 
 #github
 /.github
+# superpowers brainstorming companion
+.superpowers/
