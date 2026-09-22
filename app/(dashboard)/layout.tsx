@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/shell/Sidebar";
+import { MobileNav } from "@/components/shell/MobileNav";
 import { TopBar } from "@/components/shell/TopBar";
 import { ViewCounter } from "@/components/shell/ViewCounter";
 import { createClient } from "@/lib/supabase/server";
@@ -11,6 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="flex min-h-dvh bg-paper">
       <Sidebar />
+      <MobileNav />
       <main className="flex-1 relative px-6 py-5 md:px-8 md:py-6">
         <TopBar />
         {children}

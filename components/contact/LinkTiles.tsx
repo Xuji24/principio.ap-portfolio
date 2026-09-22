@@ -18,7 +18,7 @@ export function LinkTiles() {
             "group relative rounded-xl p-3.5 border elev-sm rim transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:elev-lg hover:border-amber/50",
             primary ? "bg-ink border-ink" : "bg-surface border-line",
           )}>
-          <span className={cn("absolute top-3.5 right-3.5 text-[11px] transition-colors", primary ? "text-muted" : "text-line group-hover:text-amber")}>{arrow}</span>
+          <span className={cn("absolute top-3.5 right-3.5 text-[11px] transition-colors", primary ? "text-muted" : "text-line group-hover:text-ink")}>{arrow}</span>
           <span className={cn("w-7 h-7 rounded-lg grid place-items-center border mb-2.5", primary ? "bg-paper/10 border-paper/20 text-paper" : "bg-paper border-line text-ink")}>
             <Icon className="w-3.5 h-3.5" />
           </span>

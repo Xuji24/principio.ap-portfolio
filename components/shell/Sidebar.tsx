@@ -17,7 +17,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[200px] shrink-0 bg-surface border-r border-line flex flex-col p-4 min-h-dvh">
+    <aside className="hidden lg:flex w-[200px] shrink-0 bg-surface border-r border-line flex-col p-4 min-h-dvh">
       <NameLockup />
       <nav aria-label="Main">
         <ul className="flex flex-col gap-px">
