@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import transporter from "@/utils/email/nodemailer";
 import EmailTemplate from "@/utils/email/EmailTemplate";
 import AdminNotificationTemplate from "@/utils/email/AdminNotificationTemplate";
-import { parseContactPayload } from "./validate";
+import { parseContactPayload, escapeHtml } from "./validate";
 
 const WINDOW_MS = 60_000;
 const MAX_PER_WINDOW = 3;
@@ -32,11 +32,21 @@ export async function POST(request: NextRequest) {
   const to = process.env.CONTACT_TO || process.env.EMAIL_USER;
 
   try {
+    // name/email/subject/message are visitor-supplied. escapeHtml() is applied
+    // ONLY to the props below, which the templates interpolate into HTML body
+    // markup — never to the plain-text `subject:` header or the `to:`/`replyTo:`
+    // addressing above/below, where escaping would corrupt the value instead of
+    // protecting anything (see validate.ts's escapeHtml comment).
     await transporter.sendMail({
       from,
       to: email,
       subject: `Re: ${subject}`,
-      html: EmailTemplate({ name, subject, message, websiteName }),
+      html: EmailTemplate({
+        name: escapeHtml(name),
+        subject: escapeHtml(subject),
+        message: escapeHtml(message),
+        websiteName,
+      }),
     });
 
     await transporter.sendMail({
@@ -44,7 +54,12 @@ export async function POST(request: NextRequest) {
       to,
       replyTo: email, // without this, replying to the notification replies to yourself
       subject: `New Contact Form Submission: ${subject}`,
-      html: AdminNotificationTemplate({ senderEmail: email, subject, message, websiteName }),
+      html: AdminNotificationTemplate({
+        senderEmail: escapeHtml(email),
+        subject: escapeHtml(subject),
+        message: escapeHtml(message),
+        websiteName,
+      }),
     });
 
     return NextResponse.json({ success: true }, { status: 200 });

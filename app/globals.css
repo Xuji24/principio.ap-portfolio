@@ -68,7 +68,9 @@ body {
   color: var(--ink);
   overflow-x: hidden;
 }
-* { border-color: var(--line); }
+@layer base {
+  * { border-color: var(--line); }
+}
 
 ::selection { background: color-mix(in oklab, var(--amber) 28%, transparent); }
 

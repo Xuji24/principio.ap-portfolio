@@ -4,9 +4,10 @@ import { useState } from "react";
 const PRESETS = ["Job opportunity", "Freelance", "Collaboration"];
 const FIELD = "h-[31px] w-full bg-paper border border-line rounded-lg px-2.5 text-[11px] text-ink outline-none focus:border-amber focus:ring-[3px] focus:ring-amber/20";
 const LABEL = "font-mono text-[7.5px] uppercase tracking-[.11em] text-muted mb-1.5 block";
+const EMPTY_FORM = { name: "", email: "", subject: "", message: "", website: "" };
 
 export function ContactForm() {
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "", website: "" });
+  const [form, setForm] = useState(EMPTY_FORM);
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const valid =
@@ -25,7 +26,15 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      setState(res.ok ? "sent" : "error");
+      if (res.ok) {
+        // Clear the fields so a stray extra click can't resubmit the same
+        // message — this also re-disables the submit button via `valid`
+        // below — and leaves a clean form ready for a follow-up message.
+        setForm(EMPTY_FORM);
+        setState("sent");
+      } else {
+        setState("error");
+      }
     } catch {
       setState("error");
     }
@@ -88,6 +97,7 @@ export function ContactForm() {
         className="w-full h-10 rounded-lg bg-ink text-paper font-display font-semibold text-[11px] elev-sm disabled:opacity-40">
         {state === "sending" ? "Sending…" : state === "sent" ? "Sent — thanks" : "Send message →"}
       </button>
+      {state === "sent" && <p role="status" className="text-[10px] text-muted mt-2">Message sent — thanks! I&apos;ll get back to you soon.</p>}
       {state === "error" && <p role="alert" className="text-[10px] text-muted mt-2">Something went wrong. Email me directly instead.</p>}
     </form>
   );

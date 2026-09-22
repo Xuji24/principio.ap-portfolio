@@ -3,6 +3,20 @@ export type ContactPayload = { name: string; email: string; subject: string; mes
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX = { name: 120, subject: 80, message: 2000 };
 
+// Escapes the five characters that matter for safely embedding untrusted text
+// inside HTML markup. Only use this at the point a value is interpolated into
+// an HTML body — NOT for plain-text headers (e.g. an email `subject:` line)
+// or addressing fields (e.g. SMTP `to:`/`replyTo:`), where escaping would
+// corrupt the value instead of protecting anything.
+export function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 export function parseContactPayload(
   body: unknown,
 ): { ok: true; data: ContactPayload } | { ok: false; error: string } {

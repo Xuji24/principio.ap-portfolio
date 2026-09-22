@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseContactPayload } from "./validate";
+import { parseContactPayload, escapeHtml } from "./validate";
 
 const good = { name: "Jane", email: "jane@example.com", subject: "Hi", message: "Hello there" };
 
@@ -29,5 +29,19 @@ describe("parseContactPayload", () => {
     const r = parseContactPayload({ ...good, name: "" });
     expect(r.ok).toBe(true);
     if (r.ok) expect(r.data.name).toBe("jane");
+  });
+});
+
+describe("escapeHtml", () => {
+  it("escapes a script tag and quoted attribute so it can't break out of HTML", () => {
+    expect(escapeHtml(`<script>alert("x")</script>`)).toBe(
+      "&lt;script&gt;alert(&quot;x&quot;)&lt;/script&gt;",
+    );
+  });
+
+  it("escapes ampersands and single quotes without double-escaping", () => {
+    expect(escapeHtml(`Tom & Jerry's "great" <b>day</b>`)).toBe(
+      "Tom &amp; Jerry&#39;s &quot;great&quot; &lt;b&gt;day&lt;/b&gt;",
+    );
   });
 });

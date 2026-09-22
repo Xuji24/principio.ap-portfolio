@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import { RouteHeader } from "@/components/ui/RouteHeader";
 import { Segmented } from "@/components/ui/Segmented";
 import { IconClose } from "@/components/ui/Icon";
 import { getCredentials, getIssuers } from "@/lib/content/credentials";
 
-export function CredentialGrid() {
+export function CredentialGrid({ subtitle }: { subtitle: string }) {
   const [issuer, setIssuer] = useState("all");
   const [open, setOpen] = useState<string | null>(null);
 
@@ -15,9 +16,12 @@ export function CredentialGrid() {
 
   return (
     <>
-      <div className="flex justify-end -mt-12 mb-4 relative z-10">
-        <Segmented options={options} value={issuer} onChange={setIssuer} />
-      </div>
+      <RouteHeader
+        crumb="Credentials"
+        title="Credentials"
+        subtitle={subtitle}
+        right={<Segmented options={options} value={issuer} onChange={setIssuer} />}
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
         {items.map((c) => (
