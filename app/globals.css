@@ -163,3 +163,11 @@ body {
   ::view-transition-old(*),
   ::view-transition-new(*) { animation: none !important; }
 }
+
+/* ============ EXPERIENCE ACCORDION ============ */
+.exp-body-wrap { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 460ms var(--ease-out); }
+.exp.is-open .exp-body-wrap { grid-template-rows: 1fr; }
+.exp-body { overflow: hidden; min-height: 0; }
+.exp-body-inner { opacity: 0; transform: translateY(-6px);
+  transition: opacity 300ms ease 100ms, transform 380ms var(--ease-out) 80ms; }
+.exp.is-open .exp-body-inner { opacity: 1; transform: none; }
