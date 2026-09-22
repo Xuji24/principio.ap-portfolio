@@ -4,7 +4,6 @@ import type { Project } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
 
 export function ProjectCard({ project, wide = false }: { project: Project; wide?: boolean }) {
-  const shotH = wide ? 150 : 98;
   return (
     <Link
       href={`/work/${project.slug}`}
@@ -16,12 +15,10 @@ export function ProjectCard({ project, wide = false }: { project: Project; wide?
       style={{ viewTransitionName: `project-${project.slug}` }}
     >
       <div
-        className={cn("shot bg-paper", wide ? "lg:w-[46%] lg:shrink-0" : "")}
-        style={{ height: shotH, ["--shot-h" as string]: `${shotH}px` }}
+        className={cn("shot bg-paper w-full", wide ? "lg:w-[46%] lg:shrink-0" : "")}
+        style={{ aspectRatio: "16 / 10" }}
       >
-        <div className="shot-inner relative w-full" style={{ aspectRatio: "16 / 34" }}>
-          <Image src={project.image} alt="" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 33vw" />
-        </div>
+        <Image src={project.image} alt="" fill className="object-contain" sizes="(max-width:1024px) 100vw, 33vw" />
       </div>
 
       <div className="p-3 flex flex-col flex-1 justify-center">

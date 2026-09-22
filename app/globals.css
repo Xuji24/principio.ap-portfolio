@@ -151,15 +151,7 @@ body {
 }
 
 /* ============ WORK CARD PREVIEW ============ */
-.shot { overflow: hidden; position: relative; }
-.shot > .shot-inner {
-  transition: transform 2.6s var(--ease-out);
-  will-change: transform;
-}
-.group\/card:hover .shot > .shot-inner { transform: translateY(calc(-100% + var(--shot-h))); }
-@media (prefers-reduced-motion: reduce) {
-  .group\/card:hover .shot > .shot-inner { transform: none; }
-}
+.shot { position: relative; }
 
 /* ============ VIEW TRANSITIONS ============ */
 @media (prefers-reduced-motion: no-preference) {
