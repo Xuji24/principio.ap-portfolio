@@ -30,3 +30,6 @@ export const IconMoon = ({ className }: IconProps) => (
 export const IconArrowUpRight = ({ className }: IconProps) => (
   <svg {...base} className={className}><path d="M7 17L17 7M7 7h10v10" /></svg>
 );
+export const IconClose = ({ className }: IconProps) => (
+  <svg {...base} className={className}><path d="M18 6L6 18M6 6l12 12" /></svg>
+);
