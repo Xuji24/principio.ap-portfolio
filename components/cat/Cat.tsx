@@ -42,7 +42,7 @@ export function Cat({ size = 46, onClick, className, label = "Angelo's cat" }: P
       style={{ width: size, display: "inline-block", lineHeight: 0, background: "none", border: 0, padding: 0, cursor: onClick ? "pointer" : "default" }}
       {...(onClick ? { type: "button" as const, "aria-label": label } : {})}
     >
-      <CatSvg />
+      <CatSvg ref={ref} />
     </Tag>
   );
 }

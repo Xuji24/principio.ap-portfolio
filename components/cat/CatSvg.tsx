@@ -1,8 +1,10 @@
+import { forwardRef } from "react";
+
 type Props = { pose?: "sit" | "stand"; className?: string };
 
-export function CatSvg({ pose = "sit", className }: Props) {
+export const CatSvg = forwardRef<SVGSVGElement, Props>(function CatSvg({ pose = "sit", className }, ref) {
   return (
-    <svg viewBox="0 0 140 152" className={className} aria-hidden="true" style={{ overflow: "visible" }}>
+    <svg ref={ref} viewBox="0 0 140 152" className={className} aria-hidden="true" style={{ overflow: "visible" }}>
       <g className="cat-root">
         <g className="tailg">
           <path
@@ -68,4 +70,4 @@ export function CatSvg({ pose = "sit", className }: Props) {
       </g>
     </svg>
   );
-}
+});

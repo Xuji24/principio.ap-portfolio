@@ -128,3 +128,24 @@ body {
 .cat-root .tailg { transform-box: fill-box; transform-origin: bottom left;
                    animation: cat-tail 3.6s ease-in-out infinite; }
 @keyframes cat-tail { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
+
+/* ============ NAME EASTER EGG ============ */
+.name-ltr { display: inline-block; transform-origin: 50% 58%; will-change: transform; }
+
+.name-ltr.spin { animation: ltr-spin .72s cubic-bezier(.42,0,.22,1) both; }
+@keyframes ltr-spin {
+  0%   { transform: translateY(0)     rotate(0deg)   scale(1); }
+  25%  { transform: translateY(-11px) rotate(90deg)  scale(1.11); }
+  50%  { transform: translateY(-14px) rotate(180deg) scale(1.14); }
+  75%  { transform: translateY(-8px)  rotate(270deg) scale(1.09); }
+  100% { transform: translateY(0)     rotate(360deg) scale(1); }
+}
+
+.name-ltr.hop { animation: ltr-hop .52s cubic-bezier(.3,1.55,.45,1) both; }
+@keyframes ltr-hop {
+  0%   { transform: translateY(0)     rotate(0deg)  scale(1); }
+  30%  { transform: translateY(-12px) rotate(9deg)  scale(1.14); }
+  58%  { transform: translateY(4px)   rotate(-5deg) scale(.95); }
+  80%  { transform: translateY(-3px)  rotate(2deg)  scale(1.03); }
+  100% { transform: translateY(0)     rotate(0deg)  scale(1); }
+}
