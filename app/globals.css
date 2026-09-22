@@ -109,3 +109,22 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============ CAT RIG ============ */
+.cat-root   { transform-box: fill-box; transform-origin: 50% 100%;
+              transform: translateY(0px) rotate(0deg) scale(1,1); }
+.headwrap   { transform-box: fill-box; transform-origin: 50% 100%;
+              transform: translateY(0px) rotate(0deg) scale(1,1); }
+.arm-r      { transform-box: fill-box; transform-origin: 16% 84%;
+              transform: rotate(0deg) translate(0px,0px); }
+.cat-root .eye  { transform-box: fill-box; transform-origin: center; transition: transform 70ms ease; }
+.cat-root .eye.blink { transform: scaleY(.07); }
+.cat-root .ball { transform-box: fill-box; transform-origin: center; }
+.cat-root .head { transform-box: fill-box; transform-origin: center bottom;
+                  transition: transform 280ms var(--ease-out); }
+.cat-root .ear  { transform-box: fill-box; transform-origin: bottom center; }
+.cat-root .ear.tw { animation: cat-ear .5s ease; }
+@keyframes cat-ear { 0%,100% { transform: rotate(0deg); } 35% { transform: rotate(-13deg); } 70% { transform: rotate(6deg); } }
+.cat-root .tailg { transform-box: fill-box; transform-origin: bottom left;
+                   animation: cat-tail 3.6s ease-in-out infinite; }
+@keyframes cat-tail { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
