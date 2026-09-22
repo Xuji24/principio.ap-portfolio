@@ -85,7 +85,7 @@ body {
   .elev-lg { box-shadow: var(--sh-lg); }
 
   /* Dark-mode rim-light: a bright 1px top edge reading as a light source above. */
-  .rim { position: relative; }
+  :where(.rim) { position: relative; }
   .rim::before {
     content: '';
     position: absolute;
