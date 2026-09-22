@@ -160,3 +160,14 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .group\/card:hover .shot > .shot-inner { transform: none; }
 }
+
+/* ============ VIEW TRANSITIONS ============ */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 260ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}
