@@ -21,13 +21,13 @@ Name:
 Angelo Principio
 
 Role:
-Backend Developer
+Full Stack Developer
 
 ==========================
 
 
 ## Summary
-Backend Developer with practical experience building automation-driven web applications that optimize internal business processes and improve operational efficiency. Skilled in Next.js, TypeScript, Python, and PostgreSQL, with hands-on experience in full-stack development, database design, testing automation, and AI-assisted software development within a real-world production environment.
+Full Stack Developer with practical experience building automation-driven web applications that optimize internal business processes and improve operational efficiency. Skilled in Next.js, TypeScript, Python, and PostgreSQL, with hands-on experience in full-stack development, database design, testing automation, and AI-assisted software development within a real-world production environment.
 
 ## Technical Skills
 - **Frontend:** Next.js, React.js, Vite, Tailwind CSS, ShadCN, Lucide React
