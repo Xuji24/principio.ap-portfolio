@@ -109,7 +109,7 @@ Schema (use these exact short keys to save tokens): {"r": "your reply", "s": ["f
 - "s": exactly 3 short follow-up questions (under 8 words each), answerable from the info above, not already asked in this conversation.
 
 Example of a CORRECT full response (this is the entire output, nothing else):
-{"r": "Angelo is a Backend Developer skilled in Python and PostgreSQL.", "s": ["What backend projects has he built?", "What databases does he use?", "Does he have any certifications?"]}
+{"r": "Angelo is a Full Stack Developer skilled in Python and PostgreSQL.", "s": ["What backend projects has he built?", "What databases does he use?", "Does he have any certifications?"]}
 `;
 
 interface ChatMessage {

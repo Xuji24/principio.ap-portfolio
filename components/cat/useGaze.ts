@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { computeGaze, lerp } from "@/lib/motion/gaze";
 
 export function useGaze(svgRef: React.RefObject<SVGSVGElement | null>) {
@@ -38,8 +38,8 @@ export function useGaze(svgRef: React.RefObject<SVGSVGElement | null>) {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
   }, [svgRef]);
 
-  return {
+  return useMemo(() => ({
     lookAt: (offset: { x: number; y: number }) => { forced.current = offset; locked.current = true; },
     release: () => { locked.current = false; },
-  };
+  }), []);
 }

@@ -24,10 +24,12 @@ export function MobileNav() {
           <ul className="flex flex-col gap-4 text-center">
             {NAV_ITEMS.map((item) => {
               const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const ItemIcon = item.icon;
               return (
                 <li key={item.href}>
                   <Link href={item.href} onClick={() => setOpen(false)} aria-current={active ? "page" : undefined}
-                    className={cn("font-display font-bold text-xl", active ? "text-ink" : "text-muted")}>
+                    className={cn("flex items-center gap-2.5 font-display font-bold text-xl", active ? "text-ink" : "text-muted")}>
+                    <ItemIcon className="w-5 h-5" strokeWidth={2} />
                     {item.label}
                   </Link>
                 </li>

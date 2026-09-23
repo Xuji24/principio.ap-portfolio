@@ -1,23 +1,6 @@
+import { arm, BACK, IN, OUT, pose, SOFT, wait } from "./animate";
+
 type GazeHandle = { lookAt: (o: { x: number; y: number }) => void; release: () => void };
-
-const OUT = "cubic-bezier(.22,.9,.32,1)";
-const BACK = "cubic-bezier(.34,1.38,.52,1)";
-const SOFT = "cubic-bezier(.25,.9,.28,1)";
-const IN = "cubic-bezier(.55,0,.85,.45)";
-
-const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-function pose(el: HTMLElement | SVGElement, y: number, rot: number, sx: number, sy: number, ms: number, ease: string) {
-  (el as SVGElement & { style: CSSStyleDeclaration }).style.transition = `transform ${ms}ms ${ease}`;
-  (el as SVGElement & { style: CSSStyleDeclaration }).style.transform =
-    `translateY(${y}px) rotate(${rot}deg) scale(${sx},${sy})`;
-}
-
-function arm(el: SVGElement, rot: number, x: number, y: number, ms: number, ease: string) {
-  (el as SVGElement & { style: CSSStyleDeclaration }).style.transition = `transform ${ms}ms ${ease}`;
-  (el as SVGElement & { style: CSSStyleDeclaration }).style.transform =
-    `rotate(${rot}deg) translate(${x}px,${y}px)`;
-}
 
 export async function playWithName(svg: SVGSVGElement, letters: HTMLElement[], gaze: GazeHandle) {
   const root = svg.querySelector<SVGGElement>(".cat-root");

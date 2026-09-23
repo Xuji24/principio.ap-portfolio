@@ -14,6 +14,9 @@
   --line:    #E8E4DE;
   --rose:    #C98F7C;
 
+  /* Fixed across themes — a cat pupil should stay dark, not flip light in dark mode. */
+  --eye-pupil: #14110F;
+
   --sh-sm: 0 1px 2px rgba(20,17,15,.05), 0 2px 8px  rgba(20,17,15,.04);
   --sh-md: 0 2px 4px rgba(20,17,15,.04), 0 8px 24px rgba(20,17,15,.07);
   --sh-lg: 0 6px 14px rgba(20,17,15,.07), 0 22px 56px rgba(20,17,15,.13);
@@ -34,6 +37,9 @@
   --amber:   #F0B454;
   --line:    #2E2925;
   --rose:    #C98F7C;
+
+  /* Fixed across themes — a cat pupil should stay dark, not flip light in dark mode. */
+  --eye-pupil: #14110F;
 
   /* Dark expresses elevation as tint + rim-light, never as shadow. */
   --sh-sm: 0 0 0 0 transparent;
@@ -72,6 +78,25 @@ body {
   * { border-color: var(--line); }
 }
 
+/* ============ THEME TRANSITION ============ */
+/* Circle expands out from the theme-toggle button, driven from JS (ThemeContext)
+   via a Web Animations API clip-path animation on ::view-transition-new(root). */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+::view-transition-new(root) {
+  animation: none;
+  z-index: 2;
+}
+/* Fold elements that normally get their own view-transition-name (project
+   cards, the work detail hero — used for shared-element nav transitions)
+   back into the single root capture while a theme toggle is in flight, so
+   nothing crossfades on its own ahead of the circle. */
+html.theme-transitioning * {
+  view-transition-name: none !important;
+}
+
 ::selection { background: color-mix(in oklab, var(--amber) 28%, transparent); }
 
 :focus-visible {
@@ -85,6 +110,27 @@ body {
   .elev-sm { box-shadow: var(--sh-sm); }
   .elev-md { box-shadow: var(--sh-md); }
   .elev-lg { box-shadow: var(--sh-lg); }
+
+  /*
+   * Hand-written (not Tailwind's `hover:`/`active:` variant machinery):
+   * Tailwind v4's arbitrary-value `shadow-[var(--x)]` utilities set
+   * --tw-shadow correctly on :hover/:active (confirmed via
+   * getComputedStyle) but the composed box-shadow property doesn't
+   * pick it up — a var()-chain quirk with custom-property utilities.
+   * Real pseudo-selectors sidestep it entirely.
+   */
+  /* Pair with a `transition-[box-shadow,…]` utility — these classes only set values, not timing. */
+  .btn-lift { box-shadow: var(--sh-sm); }
+  .btn-lift:hover { box-shadow: var(--sh-md); }
+  .btn-lift:active { box-shadow: var(--sh-sm); }
+
+  .btn-lift-lg { box-shadow: var(--sh-sm); }
+  .btn-lift-lg:hover { box-shadow: var(--sh-lg); }
+  .btn-lift-lg:active { box-shadow: var(--sh-sm); }
+
+  /* Same custom-property composition quirk, hitting `transform`/scale instead of box-shadow. */
+  .preview-zoom img { transition: transform 300ms var(--ease-out); }
+  .preview-zoom:hover img { transform: scale(1.03); }
 
   /* Dark-mode rim-light: a bright 1px top edge reading as a light source above. */
   :where(.rim) { position: relative; }

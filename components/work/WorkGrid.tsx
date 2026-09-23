@@ -1,34 +1,29 @@
 "use client";
 import { useState } from "react";
 import { RouteHeader } from "@/components/ui/RouteHeader";
-import { Segmented } from "@/components/ui/Segmented";
 import { ProjectCard } from "./ProjectCard";
-import { filterProjects } from "@/lib/content/projects";
-import type { ProjectKind } from "@/lib/content/types";
-
-const OPTIONS = [
-  { value: "all", label: "All" },
-  { value: "professional", label: "Professional" },
-  { value: "personal", label: "Personal" },
-];
+import { LivePreview } from "./LivePreview";
+import { getProjects } from "@/lib/content/projects";
+import type { Project } from "@/lib/content/types";
 
 export function WorkGrid({ subtitle }: { subtitle: string }) {
-  const [kind, setKind] = useState<"all" | ProjectKind>("all");
-  const projects = filterProjects(kind);
+  const projects = getProjects();
+  const [preview, setPreview] = useState<Project | null>(null);
+  const previewUrl = preview?.links.live;
 
   return (
     <>
-      <RouteHeader
-        crumb="Work"
-        title="Selected Work"
-        subtitle={subtitle}
-        right={<Segmented options={OPTIONS} value={kind} onChange={(v) => setKind(v as "all" | ProjectKind)} />}
-      />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <RouteHeader crumb="Work" title="Selected Work" subtitle={subtitle} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {projects.map((p) => (
-          <ProjectCard key={p.slug} project={p} wide={p.featured && kind !== "professional"} />
+          <ProjectCard key={p.slug} project={p} onPreview={p.links.live && p.embeddable !== false ? () => setPreview(p) : undefined} />
         ))}
       </div>
+
+      {preview && previewUrl && (
+        <LivePreview url={previewUrl} title={preview.title} slug={preview.slug} onClose={() => setPreview(null)} />
+      )}
     </>
   );
 }

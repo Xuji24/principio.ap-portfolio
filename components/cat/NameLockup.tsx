@@ -21,22 +21,22 @@ export function NameLockup() {
   }
 
   return (
-    <div className="flex items-end gap-2.5 px-1.5 pb-4">
+    <div className="flex items-end gap-3 px-1">
       <button
         type="button"
         onClick={play}
         aria-label="Play with the cat"
-        className="w-10 shrink-0 leading-none bg-transparent border-0 p-0 cursor-pointer"
+        className="w-14 shrink-0 leading-none bg-transparent border-0 p-0 cursor-pointer"
       >
         <CatSvg ref={svgRef} />
       </button>
-      <div>
-        <span ref={nameRef} className="font-display font-extrabold text-[14px] leading-tight tracking-[-.02em] text-ink block whitespace-nowrap">
+      <div className="min-w-0">
+        <span ref={nameRef} className="font-display font-extrabold text-lg leading-tight tracking-[-.02em] text-ink block whitespace-nowrap">
           {site.name.split("").map((c, i) => (
             <span key={i} className="name-ltr">{c === " " ? " " : c}</span>
           ))}
         </span>
-        <span className="font-mono text-[7.5px] uppercase tracking-widest text-muted mt-1 block">
+        <span className="font-mono text-[11px] uppercase tracking-widest text-muted mt-1 block">
           {site.role}
         </span>
       </div>

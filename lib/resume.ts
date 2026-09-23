@@ -71,10 +71,13 @@ Full Stack Developer with practical experience building automation-driven web ap
 *   **Description:** A web application designed to help students prepare for their thesis defense by allowing them to practice, analyze document weaknesses, receive real-time feedback, and chat with AI for guidance.
 *   **Tech Stack:** React.js, Vite, Express.js, Tailwind CSS, TypeScript.
 
-#### 2. StayQualifAI
+#### 2. Boji-AI
 *   **Description:** An AI-assisted web application that guides users through job preparation, including resume building, interview prep, job searching, and upskilling certifications.
 *   **Tech Stack:** React.js, Node.js, Express.js, Tailwind CSS, TypeScript, PostgreSQL, Supabase.
 
+#### 3. Be fit era
+*   **Description:** A running and fitness web application that allows users to join running events, track their progress, and connect with other fitness enthusiast. It is also implemented with POC of payment method, webhook integration, strava api, Role based access control (RBAC), postgreSQL, supabase, RLS policies, AI coaching and 3D avatars showcasing the workout proper forms.
+*   **Tech Stack:** Next.js, Node.js, Express.js, React.js, Tailwind CSS, TypeScript, PostgreSQL, Supabase.
 ---
 
 ## Certifications
@@ -82,10 +85,11 @@ Full Stack Developer with practical experience building automation-driven web ap
 - Introduction to Modern AI (Cisco)
 - Introduction to Cybersecurity (Cisco)
 - Python Essentials 1 (Cisco)
+- Google AI Professional Certification (Google)
 
 ## Hackathons & Activities
 - **Cursor Manila Hacksprint** (Hackathon Participant)
 - **GitHub Copilot: Dev Days** (Workshop Participant)
 - **GDG Manila: Beyond the Prompt & Next Gen Builders** (Hackathon + Workshop Participant)
-
+- **AWS Kiro Hackathon (Hackathon Participant)
 `;

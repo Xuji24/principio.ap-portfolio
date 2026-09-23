@@ -2,12 +2,21 @@
 import { useEffect, useRef } from "react";
 import { CatSvg } from "./CatSvg";
 import { useGaze } from "./useGaze";
+import { waveHello } from "./wave";
 
-type Props = { size?: number; onClick?: () => void; className?: string; label?: string };
+type Props = { size?: number; onClick?: () => void; className?: string; label?: string; waveTrigger?: number };
 
-export function Cat({ size = 46, onClick, className, label = "Angelo's cat" }: Props) {
+export function Cat({ size = 46, onClick, className, label = "Angelo's cat", waveTrigger }: Props) {
   const ref = useRef<SVGSVGElement | null>(null);
-  useGaze(ref);
+  const gaze = useGaze(ref);
+
+  useEffect(() => {
+    if (!waveTrigger) return;
+    const svg = ref.current;
+    if (!svg) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    waveHello(svg, gaze);
+  }, [waveTrigger, gaze]);
 
   useEffect(() => {
     const svg = ref.current;

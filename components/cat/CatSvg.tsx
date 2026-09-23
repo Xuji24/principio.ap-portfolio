@@ -47,7 +47,7 @@ export const CatSvg = forwardRef<SVGSVGElement, Props>(function CatSvg({ pose = 
               <ellipse cx="52" cy="59" rx="15" ry="16.5" fill="var(--surface)" />
               <g className="ball">
                 <circle cx="52" cy="59" r="10.6" fill="var(--amber)" />
-                <circle cx="52" cy="59" r="8.3" fill="var(--ink)" />
+                <circle cx="52" cy="59" r="7" fill="var(--eye-pupil)" />
                 <circle cx="48.4" cy="55" r="3.7" fill="#fff" />
                 <circle cx="55" cy="62.6" r="1.9" fill="#fff" opacity=".8" />
               </g>
@@ -56,7 +56,7 @@ export const CatSvg = forwardRef<SVGSVGElement, Props>(function CatSvg({ pose = 
               <ellipse cx="88" cy="59" rx="15" ry="16.5" fill="var(--surface)" />
               <g className="ball">
                 <circle cx="88" cy="59" r="10.6" fill="var(--amber)" />
-                <circle cx="88" cy="59" r="8.3" fill="var(--ink)" />
+                <circle cx="88" cy="59" r="7" fill="var(--eye-pupil)" />
                 <circle cx="84.4" cy="55" r="3.7" fill="#fff" />
                 <circle cx="91" cy="62.6" r="1.9" fill="#fff" opacity=".8" />
               </g>
@@ -65,15 +65,6 @@ export const CatSvg = forwardRef<SVGSVGElement, Props>(function CatSvg({ pose = 
             <path d="M70 83 L64.5 77.5 Q70 74.8 75.5 77.5 Z" fill="var(--rose)" />
             <path d="M70 83 q-4.5 5.5 -9 1.8" fill="none" stroke="var(--muted)" strokeWidth="2" strokeLinecap="round" />
             <path d="M70 83 q4.5 5.5 9 1.8" fill="none" stroke="var(--muted)" strokeWidth="2" strokeLinecap="round" />
-
-            <g className="whiskers" stroke="var(--ink)" strokeWidth="1.4" strokeLinecap="round">
-              <path d="M36 66 L8 58" />
-              <path d="M35 71 L5 71" />
-              <path d="M36 76 L8 84" />
-              <path d="M104 66 L132 58" />
-              <path d="M105 71 L135 71" />
-              <path d="M104 76 L132 84" />
-            </g>
           </g>
         </g>
       </g>

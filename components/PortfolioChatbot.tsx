@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send, Clock } from "lucide-react";
+import { X, Send, Clock } from "lucide-react";
+import { Cat } from "@/components/cat/Cat";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -29,6 +30,7 @@ export default function PortfolioChatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
+  const [waveTrigger, setWaveTrigger] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -116,26 +118,37 @@ export default function PortfolioChatbot() {
     lastMessage.suggestions.length > 0;
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {/* Chat panel */}
       {isOpen && (
         <div
-          className="mb-4 w-[92vw] max-w-sm sm:max-w-md h-120 rounded-2xl border border-cyan-400/30
-                     bg-slate-950/95 backdrop-blur-xl shadow-[0_0_40px_-10px_rgba(34,211,238,0.4)]
+          className="mb-4 w-[92vw] max-w-sm sm:max-w-md h-120 rounded-2xl border border-line rim
+                     bg-surface/95 backdrop-blur-xl elev-lg
                      flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-cyan-400/20 bg-linear-to-r from-cyan-500/10 to-transparent">
-            <div className="flex items-center gap-2">
-              <div className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-400" />
+          <div className="flex items-center justify-between px-4 py-3 border-b border-line bg-surface">
+            <button
+              type="button"
+              onClick={() => setWaveTrigger((n) => n + 1)}
+              className="flex items-center gap-2.5 text-left"
+              aria-label="Wave hello"
+            >
+              <Cat size={40} waveTrigger={waveTrigger} />
+              <div>
+                <p className="text-sm font-medium text-ink leading-tight">Angelo&apos;s Portfolio Assistant</p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber opacity-75" />
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber" />
+                  </span>
+                  <span className="text-[10px] text-muted">Online · answers from this site</span>
+                </div>
               </div>
-              <span className="text-sm font-medium text-cyan-50">Angelo&apos;s Portfolio Assistant</span>
-            </div>
+            </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="text-cyan-300/70 hover:text-cyan-300 transition-colors"
+              className="text-muted hover:text-ink transition-colors"
               aria-label="Close chat"
             >
               <X size={18} />
@@ -149,8 +162,8 @@ export default function PortfolioChatbot() {
                 <div
                   className={`max-w-[85%] rounded-xl px-3 py-2 text-sm leading-relaxed ${
                     msg.role === "user"
-                      ? "bg-cyan-500 text-slate-950 font-medium"
-                      : "bg-slate-800/80 text-cyan-50 border border-cyan-400/10"
+                      ? "bg-ink text-paper font-medium"
+                      : "bg-paper text-ink border border-line"
                   }`}
                 >
                   {msg.content}
@@ -160,11 +173,11 @@ export default function PortfolioChatbot() {
 
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-slate-800/80 border border-cyan-400/10 rounded-xl px-3 py-2 flex gap-1">
+                <div className="bg-paper border border-line rounded-xl px-3 py-2 flex gap-1">
                   {[0, 1, 2].map((i) => (
                     <span
                       key={i}
-                      className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-bounce"
+                      className="h-1.5 w-1.5 rounded-full bg-amber animate-bounce"
                       style={{ animationDelay: `${i * 0.15}s` }}
                     />
                   ))}
@@ -174,13 +187,13 @@ export default function PortfolioChatbot() {
 
             {/* Follow-up suggestions after the latest assistant reply */}
             {showSuggestions && (
-              <div className="flex flex-col gap-2 pt-1">
+              <div className="flex flex-wrap gap-2 pt-1">
                 {lastMessage.suggestions!.map((q) => (
                   <button
                     key={q}
                     onClick={() => sendMessage(q)}
-                    className="text-left text-xs text-cyan-200/80 border border-cyan-400/20 rounded-lg px-3 py-2
-                               hover:bg-cyan-400/10 hover:text-cyan-100 transition-colors"
+                    className="text-xs text-muted border border-line rounded-full px-3 py-1.5
+                               hover:bg-amber/10 hover:text-ink transition-colors"
                   >
                     {q}
                   </button>
@@ -191,54 +204,56 @@ export default function PortfolioChatbot() {
 
           {/* Cooldown banner */}
           {cooldownRemaining > 0 && (
-            <div className="flex items-center gap-2 px-4 py-2 text-xs text-cyan-300/80 border-t border-cyan-400/20 bg-cyan-400/5">
+            <div className="flex items-center gap-2 px-4 py-2 text-xs text-muted border-t border-line bg-amber/5">
               <Clock size={13} />
               Message limit reached — try again in {formatCountdown(cooldownRemaining)}
             </div>
           )}
 
           {/* Input */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              sendMessage(input);
-            }}
-            className="flex items-center gap-2 border-t border-cyan-400/20 p-3"
-          >
-            <input
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={cooldownRemaining > 0}
-              placeholder={cooldownRemaining > 0 ? "Please wait..." : "Ask about Angelo's work..."}
-              className="flex-1 bg-slate-900/80 text-sm text-cyan-50 placeholder-cyan-300/40 rounded-lg px-3 py-2
-                         border border-cyan-400/20 focus:outline-none focus:ring-1 focus:ring-cyan-400/60
-                         disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-            <button
-              type="submit"
-              disabled={isLoading || !input.trim() || cooldownRemaining > 0}
-              className="p-2 rounded-lg bg-cyan-500 text-slate-950 disabled:opacity-40 disabled:cursor-not-allowed
-                         hover:bg-cyan-400 transition-colors"
-              aria-label="Send message"
+          <div className="border-t border-line p-3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendMessage(input);
+              }}
+              className="flex items-center gap-2"
             >
-              <Send size={16} />
-            </button>
-          </form>
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={cooldownRemaining > 0}
+                placeholder={cooldownRemaining > 0 ? "Please wait..." : "Ask a question..."}
+                className="flex-1 bg-paper text-sm text-ink placeholder-muted rounded-full px-4 py-2.5
+                           border border-line focus:outline-none focus:ring-1 focus:ring-amber/60
+                           disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !input.trim() || cooldownRemaining > 0}
+                className="shrink-0 p-2.5 rounded-full bg-ink text-paper disabled:opacity-40 disabled:cursor-not-allowed
+                           hover:opacity-90 transition-opacity"
+                aria-label="Send message"
+              >
+                <Send size={16} />
+              </button>
+            </form>
+            <p className="text-center text-[9.5px] text-muted mt-2">
+              Answers come from this site only and can be wrong. Chats are not stored.
+            </p>
+          </div>
         </div>
       )}
 
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-full bg-cyan-500 text-slate-950 pl-4 pr-5 py-3
-                   shadow-[0_0_25px_-5px_rgba(34,211,238,0.7)] hover:bg-cyan-400 hover:scale-105
-                   transition-all duration-200 font-medium text-sm"
+        className="relative flex items-center justify-center h-14 w-14 rounded-full bg-surface border border-line
+                   elev-lg rim hover:scale-105 transition-transform duration-200"
         aria-label={isOpen ? "Close portfolio chat" : "Open portfolio chat"}
       >
-        {isOpen && <X size={18} />}
-        {isOpen ? "Close" : "Ask about Angelo"}
-        {!isOpen && <MessageCircle size={18} className="ml-0.5" />}
+        {isOpen ? <X size={20} className="text-ink" /> : <Cat size={36} />}
       </button>
     </div>
   );

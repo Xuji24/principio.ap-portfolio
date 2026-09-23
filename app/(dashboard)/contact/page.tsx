@@ -10,7 +10,7 @@ export default function ContactPage() {
     <>
       <RouteHeader crumb="Contact" title="Let's work together"
         subtitle="Send a message, or put a call straight in my calendar." />
-      <div className="grid grid-cols-1 lg:grid-cols-[1.42fr_.78fr] gap-3.5 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.42fr_.78fr] gap-3.5">
         <ContactForm />
         <BookingPlaceholder />
       </div>

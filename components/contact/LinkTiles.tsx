@@ -11,19 +11,19 @@ const TILES = [
 
 export function LinkTiles() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 mt-3.5">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 mt-4">
       {TILES.map(({ key, label, value, href, Icon, primary, arrow }) => (
         <a key={key} href={href} {...(key === "resume" ? { download: true } : { target: "_blank", rel: "noopener noreferrer" })}
           className={cn(
-            "group relative rounded-xl p-3.5 border elev-sm rim transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:elev-lg hover:border-amber/50",
+            "btn-lift-lg group relative rounded-xl p-5 border rim transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-amber/50",
             primary ? "bg-ink border-ink" : "bg-surface border-line",
           )}>
-          <span className={cn("absolute top-3.5 right-3.5 text-[11px] transition-colors", primary ? "text-muted" : "text-line group-hover:text-ink")}>{arrow}</span>
-          <span className={cn("w-7 h-7 rounded-lg grid place-items-center border mb-2.5", primary ? "bg-paper/10 border-paper/20 text-paper" : "bg-paper border-line text-ink")}>
-            <Icon className="w-3.5 h-3.5" />
+          <span className={cn("absolute top-4 right-4 text-sm transition-colors", primary ? "text-muted" : "text-line group-hover:text-ink")}>{arrow}</span>
+          <span className={cn("w-10 h-10 rounded-lg grid place-items-center border mb-3.5", primary ? "bg-paper/10 border-paper/20 text-paper" : "bg-paper border-line text-ink")}>
+            <Icon className="w-4 h-4" />
           </span>
-          <p className={cn("font-display font-bold text-[11.5px]", primary ? "text-paper" : "text-ink")}>{label}</p>
-          <p className={cn("font-mono text-[7.5px] mt-1 truncate", primary ? "text-paper/60" : "text-muted")}>{value}</p>
+          <p className={cn("font-display font-bold text-sm", primary ? "text-paper" : "text-ink")}>{label}</p>
+          <p className={cn("font-mono text-[10px] mt-1.5 truncate", primary ? "text-paper/60" : "text-muted")}>{value}</p>
         </a>
       ))}
     </div>

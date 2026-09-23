@@ -1,29 +1,27 @@
 "use client";
-import { useTheme } from "@/components/ThemeContext";
-import { IconSun, IconMoon, IconDoc } from "@/components/ui/Icon";
+import { motion } from "framer-motion";
+import { IconDoc, IconArrowUpRight } from "@/components/ui/Icon";
 import { site } from "@/lib/content/site";
+import { liftPress } from "@/lib/motion/liftPress";
 
 export function TopBar() {
-  const { theme, setTheme } = useTheme();
-  const dark = theme === "dark";
-
   return (
-    <div className="absolute top-3 right-4 flex items-center gap-2 z-20">
-      <button
-        type="button"
-        onClick={() => setTheme(dark ? "light" : "dark")}
-        aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
-        className="w-7 h-7 grid place-items-center rounded-lg bg-surface border border-line elev-sm text-ink"
-      >
-        {dark ? <IconSun className="w-3.5 h-3.5" /> : <IconMoon className="w-3.5 h-3.5" />}
-      </button>
-      <a
+    <div className="absolute top-5 right-5 md:top-7 md:right-9 flex items-center gap-3 z-20">
+      <motion.a
         href={site.links.resume}
         download
-        className="flex items-center gap-1.5 h-7 px-3 rounded-lg bg-ink text-paper text-[10.5px] font-medium elev-sm"
+        {...liftPress}
+        className="hidden sm:inline-flex items-center gap-2 h-10 px-4 rounded-full bg-surface border border-line transition-colors text-ink text-[13px] font-medium hover:border-amber/40"
       >
-        <IconDoc className="w-3 h-3" /> Résumé
-      </a>
+        <IconDoc className="w-3.5 h-3.5" /> Résumé
+      </motion.a>
+      <motion.a
+        href="/contact"
+        {...liftPress}
+        className="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-ink text-paper text-[13px] font-semibold"
+      >
+        Get in touch <IconArrowUpRight className="w-3.5 h-3.5" />
+      </motion.a>
     </div>
   );
 }
