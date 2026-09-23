@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/content/types";
 import { cn } from "@/lib/utils";
+import { SkeletonImage } from "@/components/ui/SkeletonImage";
 
 export function ProjectCard({ project, onPreview }: { project: Project; onPreview?: () => void }) {
   const className = cn(
@@ -12,7 +12,7 @@ export function ProjectCard({ project, onPreview }: { project: Project; onPrevie
   const body = (
     <>
       <div className="shot bg-paper w-full" style={{ aspectRatio: "16 / 9" }}>
-        <Image src={project.image} alt="" fill className="object-contain" sizes="(max-width:1024px) 100vw, 33vw" />
+        <SkeletonImage src={project.image} alt="" className="object-contain" sizes="(max-width:1024px) 100vw, 33vw" />
       </div>
 
       <div className="p-2.5 flex flex-col flex-1 min-h-0">

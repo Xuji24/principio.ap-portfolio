@@ -11,6 +11,7 @@ import { getStack } from "@/lib/content/skills";
 import { getExperience } from "@/lib/content/experience";
 import { TECH_ICONS } from "@/lib/content/techIcons";
 import { liftPress } from "@/lib/motion/liftPress";
+import { LogoLoop } from "@/components/LogoLoop";
 
 function CardIcon({ icon: Icon, inverted }: { icon: LucideIcon; inverted?: boolean }) {
   return (
@@ -22,7 +23,7 @@ function CardIcon({ icon: Icon, inverted }: { icon: LucideIcon; inverted?: boole
           : "w-9 h-9 rounded-xl bg-amber/15 border border-amber/30 text-amber grid place-items-center shrink-0"
       }
     >
-      <Icon className="w-4 h-4" strokeWidth={2} />
+      <Icon className="w-5 h-5" strokeWidth={2} />
     </motion.span>
   );
 }
@@ -73,7 +74,7 @@ export default function OverviewPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3.5 mt-3.5">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-3.5 mt-3.5 items-start">
         {featured && (
           <Link
             href={`/work/${featured.slug}`}
@@ -82,8 +83,8 @@ export default function OverviewPage() {
             <div className="p-4 pb-0">
               <CardHeader icon={FolderKanban} title="Work" blurb="Funnels, workflows and apps built to solve real problems." />
             </div>
-            <div className="relative h-44 md:h-52 bg-paper mt-4 mx-4 rounded-lg overflow-hidden">
-              <Image src={featured.image} alt="" fill className="object-cover" sizes="(max-width:1024px) 100vw, 60vw" priority />
+            <div className="relative aspect-video bg-paper mt-4 mx-4 rounded-lg overflow-hidden">
+              <Image src={featured.image} alt="" fill className="object-cover object-top" sizes="(max-width:1024px) 100vw, 40vw" priority />
             </div>
             <div className="p-4">
               <span className="font-mono text-[9px] uppercase tracking-[.08em] px-2 py-1 rounded bg-amber/15 border border-amber/40 text-ink">
@@ -95,61 +96,75 @@ export default function OverviewPage() {
           </Link>
         )}
 
-        <Link href="/skills" className="btn-lift transition-shadow bg-surface border border-line rounded-xl p-4 rim block group">
-          <CardHeader icon={Layers} title="Skills" blurb="Languages, frameworks and tools I build with." />
-          <div className="mt-4 space-y-3">
-            {getStack().map((g) => (
-              <div key={g.label}>
-                <p className="font-mono text-[9px] uppercase tracking-[.1em] text-muted mb-1.5">{g.label}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {g.items.map((t) => {
-                    const TechIcon = TECH_ICONS[t];
-                    return (
-                      <span key={t} className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink bg-paper border border-line rounded-md px-2 py-1.5">
-                        {TechIcon && <TechIcon className="w-3 h-3 shrink-0" />}
-                        {t}
-                      </span>
-                    );
-                  })}
+        <div className="lg:col-span-3 flex flex-col gap-3.5">
+          <Link href="/skills" className="btn-lift transition-shadow bg-surface border border-line rounded-xl p-4 rim block group">
+            <CardHeader icon={Layers} title="Skills" blurb="Languages, frameworks and tools I build with." />
+            <div className="mt-4 space-y-3">
+              {getStack().map((g) => (
+                <div key={g.label}>
+                  <p className="font-mono text-[9px] uppercase tracking-widest text-muted mb-1.5">{g.label}</p>
+                  <LogoLoop
+                    logos={g.items.map((t) => {
+                      const TechIcon = TECH_ICONS[t];
+                      return {
+                        ariaLabel: t,
+                        node: (
+                          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink bg-paper border border-line rounded-md px-2 py-1.5 whitespace-nowrap">
+                            {TechIcon && <TechIcon className="w-3 h-3 shrink-0" />}
+                            {t}
+                          </span>
+                        ),
+                      };
+                    })}
+                    speed={26}
+                    gap={6}
+                    logoHeight={26}
+                    pauseOnHover
+                    fadeOut
+                    fadeOutColor="var(--surface)"
+                    ariaLabel={`${g.label} skills`}
+                  />
+                </div>
+              ))}
+            </div>
+          </Link>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link href="/experience" className="btn-lift transition-shadow relative overflow-hidden bg-surface border border-line rounded-xl p-4 rim block group">
+              <Watermark icon={Briefcase} />
+              <CardHeader icon={Briefcase} title="Experience" blurb="Where the work actually happened." />
+              <div className="relative mt-4">
+                <span className="font-mono text-[9px] uppercase tracking-[.08em] px-2 py-1 rounded bg-amber/15 border border-amber/40 text-ink">
+                  {latestRole.meta}
+                </span>
+                <p className="font-display font-bold text-sm text-ink mt-2">{latestRole.title}</p>
+                <p className="text-xs text-muted mt-1">{latestRole.org} · {latestRole.start}–{latestRole.end}</p>
+              </div>
+            </Link>
+
+            <Link href="/credentials" className="btn-lift transition-shadow relative overflow-hidden bg-surface border border-line rounded-xl p-4 rim block group">
+              <Watermark icon={Award} />
+              <CardHeader icon={Award} title="Credentials" blurb="Latest certification earned." />
+              <div className="relative flex items-center gap-3 mt-4">
+                <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-paper border border-line shrink-0">
+                  <Image src={latestCredential.image} alt="" fill className="object-cover" sizes="64px" />
+                </div>
+                <div className="min-w-0">
+                  <p className="font-display font-bold text-sm text-ink leading-tight">{latestCredential.title}</p>
+                  <p className="text-xs text-muted mt-1">{latestCredential.issuer} · {latestCredential.year}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </Link>
+            </Link>
 
-        <Link href="/experience" className="btn-lift transition-shadow relative overflow-hidden bg-surface border border-line rounded-xl p-4 rim block group">
-          <Watermark icon={Briefcase} />
-          <CardHeader icon={Briefcase} title="Experience" blurb="Where the work actually happened." />
-          <div className="relative mt-4">
-            <span className="font-mono text-[9px] uppercase tracking-[.08em] px-2 py-1 rounded bg-amber/15 border border-amber/40 text-ink">
-              {latestRole.meta}
-            </span>
-            <p className="font-display font-bold text-sm text-ink mt-2">{latestRole.title}</p>
-            <p className="text-xs text-muted mt-1">{latestRole.org} · {latestRole.start}–{latestRole.end}</p>
+            <Link href="/contact" className="btn-lift transition-shadow relative overflow-hidden bg-ink rounded-xl p-4 block group flex flex-col justify-between">
+              <Watermark icon={MessageCircle} inverted />
+              <CardHeader icon={MessageCircle} title="Contact" blurb="Have a project in mind?" inverted />
+              <p className="relative font-display font-semibold text-sm text-paper mt-4 inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-[gap]">
+                Let&rsquo;s talk <IconArrowUpRight className="w-3.5 h-3.5" />
+              </p>
+            </Link>
           </div>
-        </Link>
-
-        <Link href="/credentials" className="btn-lift transition-shadow relative overflow-hidden bg-surface border border-line rounded-xl p-4 rim block group">
-          <Watermark icon={Award} />
-          <CardHeader icon={Award} title="Credentials" blurb="Latest certification earned." />
-          <div className="relative flex items-center gap-3 mt-4">
-            <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-paper border border-line shrink-0">
-              <Image src={latestCredential.image} alt="" fill className="object-cover" sizes="64px" />
-            </div>
-            <div className="min-w-0">
-              <p className="font-display font-bold text-sm text-ink leading-tight">{latestCredential.title}</p>
-              <p className="text-xs text-muted mt-1">{latestCredential.issuer} · {latestCredential.year}</p>
-            </div>
-          </div>
-        </Link>
-
-        <Link href="/contact" className="btn-lift transition-shadow relative overflow-hidden bg-ink rounded-xl p-4 block group flex flex-col justify-between">
-          <Watermark icon={MessageCircle} inverted />
-          <CardHeader icon={MessageCircle} title="Contact" blurb="Have a project in mind?" inverted />
-          <p className="relative font-display font-semibold text-sm text-paper mt-4 inline-flex items-center gap-1.5 group-hover:gap-2.5 transition-[gap]">
-            Let&rsquo;s talk <IconArrowUpRight className="w-3.5 h-3.5" />
-          </p>
-        </Link>
+        </div>
       </div>
     </>
   );

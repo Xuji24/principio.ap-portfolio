@@ -1,12 +1,19 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { CatSvg } from "./CatSvg";
+import { CatSvg, type CatVariant } from "./CatSvg";
 import { useGaze } from "./useGaze";
 import { waveHello } from "./wave";
 
-type Props = { size?: number; onClick?: () => void; className?: string; label?: string; waveTrigger?: number };
+type Props = {
+  size?: number;
+  onClick?: () => void;
+  className?: string;
+  label?: string;
+  waveTrigger?: number;
+  variant?: CatVariant;
+};
 
-export function Cat({ size = 46, onClick, className, label = "Angelo's cat", waveTrigger }: Props) {
+export function Cat({ size = 46, onClick, className, label = "Angelo's cat", waveTrigger, variant }: Props) {
   const ref = useRef<SVGSVGElement | null>(null);
   const gaze = useGaze(ref);
 
@@ -51,7 +58,7 @@ export function Cat({ size = 46, onClick, className, label = "Angelo's cat", wav
       style={{ width: size, display: "inline-block", lineHeight: 0, background: "none", border: 0, padding: 0, cursor: onClick ? "pointer" : "default" }}
       {...(onClick ? { type: "button" as const, "aria-label": label } : {})}
     >
-      <CatSvg ref={ref} />
+      <CatSvg ref={ref} variant={variant} />
     </Tag>
   );
 }

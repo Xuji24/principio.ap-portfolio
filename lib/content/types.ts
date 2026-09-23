@@ -36,4 +36,9 @@ export type ExperienceEntry = {
 
 export type Capability = { id: string; title: string; description: string };
 export type StackGroup = { label: string; items: string[] };
-export type Credential = { id: string; title: string; issuer: string; year: string; image: string };
+
+export type SkillEvidence = { slug: string; title: string };
+/** A single tool/tech, with proof of where it's actually been used. */
+export type SkillItem = { name: string; evidence: SkillEvidence[]; portfolio: boolean };
+export type SkillGroup = { label: string; items: SkillItem[] };
+export type Credential = { id: string; title: string; issuer: string; year: string; image: string; description: string };

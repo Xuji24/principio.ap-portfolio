@@ -16,7 +16,7 @@ const ENTRIES: ExperienceEntry[] = [
       "Used TypeScript throughout to surface defects at build time rather than in review",
       "Built the interface with Tailwind and ShadCN against the team's existing design conventions",
     ],
-    tech: ["Next.js", "Python", "TypeScript", "PostgreSQL", "SQLAlchemy", "Alembic", "Playwright", "Tailwind", "ShadCN"],
+    tech: ["Next.js", "Python", "FastAPI", "TypeScript", "PostgreSQL", "SQLAlchemy", "Alembic", "Playwright", "Tailwind", "ShadCN"],
   },
   {
     id: "pup-bsit",

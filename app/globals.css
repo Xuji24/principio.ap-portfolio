@@ -146,6 +146,18 @@ html.theme-transitioning * {
 
   .scrollbar-hidden { scrollbar-width: none; -ms-overflow-style: none; }
   .scrollbar-hidden::-webkit-scrollbar { display: none; }
+
+  /* Shimmer placeholder shown while a large local image (project shots, cert scans) decodes. */
+  .img-skeleton {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, var(--paper) 30%, var(--line) 50%, var(--paper) 70%);
+    background-size: 200% 100%;
+    animation: img-shimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes img-shimmer {
+    0% { background-position: 150% 0; }
+    100% { background-position: -50% 0; }
+  }
 }
 
 /* ============ REDUCED MOTION ============ */
@@ -164,7 +176,7 @@ html.theme-transitioning * {
               transform: translateY(0px) rotate(0deg) scale(1,1); }
 .headwrap   { transform-box: fill-box; transform-origin: 50% 100%;
               transform: translateY(0px) rotate(0deg) scale(1,1); }
-.arm-r      { transform-box: fill-box; transform-origin: 16% 84%;
+.arm-r      { transform-box: fill-box; transform-origin: 10% 10%;
               transform: rotate(0deg) translate(0px,0px); }
 .cat-root .eye  { transform-box: fill-box; transform-origin: center; transition: transform 70ms ease; }
 .cat-root .eye.blink { transform: scaleY(.07); }
@@ -177,6 +189,75 @@ html.theme-transitioning * {
 .cat-root .tailg { transform-box: fill-box; transform-origin: bottom left;
                    animation: cat-tail 3.6s ease-in-out infinite; }
 @keyframes cat-tail { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
+
+/* ============ CAT REACTION BUBBLE ============ */
+.cat-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 10px;
+  z-index: 10;
+  /* Wraps instead of growing wide, so a long line can't spill into whatever
+     sits next to a narrow cat (e.g. the sidebar name beside Luke). */
+  width: max-content;
+  max-width: 130px;
+  text-align: center;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 7px 11px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 16px rgba(0,0,0,.14);
+  pointer-events: none;
+  animation: cat-bubble-life 5s var(--ease-out) forwards;
+}
+.cat-bubble-tail {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transform: translateX(-50%) rotate(45deg);
+}
+.cat-bubble--static { animation: none; opacity: 1; transform: translateX(-50%); }
+@keyframes cat-bubble-life {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(6px) scale(.75); }
+  8%   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.06); }
+  14%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  90%  { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-6px) scale(.9); }
+}
+
+/* Leans toward the right ear instead of dead-center. Still `bottom: 100%`
+   (inherited) — fully above the cat's own box — so even though it drifts
+   over whatever sits to the right (e.g. a sidebar name), it never drops
+   into that row's vertical space and can't cover its text. */
+.cat-bubble--ear {
+  left: auto;
+  right: -6px;
+  margin-bottom: 4px;
+  padding: 5px 9px;
+  animation-name: cat-bubble-life-ear;
+}
+.cat-bubble--ear .cat-bubble-tail {
+  left: auto;
+  right: 12px;
+  transform: rotate(45deg);
+}
+.cat-bubble--ear.cat-bubble--static { transform: none; }
+@keyframes cat-bubble-life-ear {
+  0%   { opacity: 0; transform: translateY(6px) scale(.75); }
+  8%   { opacity: 1; transform: translateY(0) scale(1.06); }
+  14%  { opacity: 1; transform: translateY(0) scale(1); }
+  90%  { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-6px) scale(.9); }
+}
 
 /* ============ NAME EASTER EGG ============ */
 .name-ltr { display: inline-block; white-space: pre; transform-origin: 50% 58%; will-change: transform; }

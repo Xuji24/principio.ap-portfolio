@@ -2,7 +2,8 @@ import type { IconType } from "react-icons";
 import {
   SiTypescript, SiPython, SiJavascript, SiSharp, SiNextdotjs, SiReact, SiExpress,
   SiFastapi, SiTailwindcss, SiShadcnui, SiPostgresql, SiSupabase, SiMysql,
-  SiSqlalchemy, SiGit, SiVite,
+  SiSqlalchemy, SiGit, SiVite, SiNodedotjs, SiOpenai, SiFramer, SiVercel,
+  SiVitest, SiTestinglibrary, SiElevenlabs,
 } from "react-icons/si";
 
 /** Logo for a stack item, where one exists in Simple Icons — chips fall back to text-only. */
@@ -23,4 +24,11 @@ export const TECH_ICONS: Record<string, IconType> = {
   SQLAlchemy: SiSqlalchemy,
   Git: SiGit,
   Vite: SiVite,
+  "Node.js": SiNodedotjs,
+  OpenAI: SiOpenai,
+  "Framer Motion": SiFramer,
+  Vercel: SiVercel,
+  Vitest: SiVitest,
+  "Testing Library": SiTestinglibrary,
+  ElevenLabs: SiElevenlabs,
 };

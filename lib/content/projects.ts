@@ -16,7 +16,7 @@ const PROJECTS: Project[] = [
       "Wrote end-to-end Playwright coverage to catch regressions before release",
       "Used TypeScript throughout to surface defects at build time rather than in review",
     ],
-    tech: ["Next.js", "Python", "TypeScript", "PostgreSQL", "SQLAlchemy", "Alembic", "Playwright", "Tailwind"],
+    tech: ["Next.js", "Python", "FastAPI", "TypeScript", "PostgreSQL", "SQLAlchemy", "Alembic", "Playwright", "Tailwind", "ShadCN"],
     // Placeholder image: the real product screenshot hasn't been supplied yet.
     // Reusing this neutral background texture (formerly Hero.tsx's, now unused)
     // until the actual screenshot is available.
@@ -54,7 +54,7 @@ const PROJECTS: Project[] = [
       "Built scheduling and availability management against a Supabase-backed Postgres database",
       "Shipped to a live domain and kept it in production use",
     ],
-    tech: ["Next.js", "Node.js", "TypeScript", "React", "Supabase", "PostgreSQL"],
+    tech: ["Next.js", "Node.js", "TypeScript", "React", "Supabase", "PostgreSQL", "hCaptcha"],
     image: "/dcreatives.png",
     imageWidth: 2737,
     imageHeight: 1757,
@@ -89,7 +89,7 @@ const PROJECTS: Project[] = [
       "Built four connected workflows behind one account model",
       "Designed the Postgres schema covering résumés, sessions and progress",
     ],
-    tech: ["React", "Node.js", "Express", "TypeScript", "PostgreSQL", "Supabase", "Tailwind"],
+    tech: ["React", "Node.js", "Express", "TypeScript", "PostgreSQL", "Supabase", "Tailwind", "ElevenLabs"],
     image: "/boji-ai-mockup.png",
     imageWidth: 2737,
     imageHeight: 1757,
@@ -160,7 +160,7 @@ const PROJECTS: Project[] = [
       "Built practice sessions with structured feedback on submitted documents",
       "Shipped to production on Vercel",
     ],
-    tech: ["React", "Vite", "Express", "TypeScript", "Tailwind"],
+    tech: ["React", "Vite", "Express", "TypeScript", "Tailwind", "OpenAI", "OpenRouter"],
     image: "/thesisit.png",
     imageWidth: 2737,
     imageHeight: 1757,

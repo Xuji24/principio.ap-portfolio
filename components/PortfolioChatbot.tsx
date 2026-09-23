@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Send, Clock } from "lucide-react";
 import { Cat } from "@/components/cat/Cat";
+import { useCatClickSound } from "@/components/cat/catSounds";
+import { useCatBubble, CatBubble } from "@/components/cat/catBubble";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -19,7 +21,7 @@ const INITIAL_SUGGESTIONS = [
 const WELCOME_MESSAGE: ChatMessage = {
   role: "assistant",
   content:
-    "Hey! I'm Angelo's portfolio assistant. Ask me about his projects, skills, or experience.",
+    "Hey! I'm Meira. Ask me about Angelo's projects, skills, or experience.",
   suggestions: INITIAL_SUGGESTIONS,
 };
 
@@ -31,6 +33,8 @@ export default function PortfolioChatbot() {
   const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
   const [waveTrigger, setWaveTrigger] = useState(0);
+  const playCatClick = useCatClickSound();
+  const catBubble = useCatBubble();
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -122,27 +126,34 @@ export default function PortfolioChatbot() {
       {/* Chat panel */}
       {isOpen && (
         <div
-          className="mb-4 w-[92vw] max-w-sm sm:max-w-md h-120 rounded-2xl border border-line rim
+          className="relative mb-4 w-[92vw] max-w-sm sm:max-w-md h-120 rounded-2xl border border-line rim
                      bg-surface/95 backdrop-blur-xl elev-lg
-                     flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200"
+                     flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-200"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-line bg-surface">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-line bg-surface rounded-t-2xl">
             <button
               type="button"
-              onClick={() => setWaveTrigger((n) => n + 1)}
+              onClick={() => {
+                setWaveTrigger((n) => n + 1);
+                const spam = playCatClick();
+                catBubble.react(spam);
+              }}
               className="flex items-center gap-2.5 text-left"
-              aria-label="Wave hello"
+              aria-label="Wave hello to Meira"
             >
-              <Cat size={40} waveTrigger={waveTrigger} />
+              <span className="relative inline-block">
+                <Cat size={40} waveTrigger={waveTrigger} variant="black" />
+                <CatBubble bubble={catBubble.bubble} onDone={catBubble.dismiss} />
+              </span>
               <div>
-                <p className="text-sm font-medium text-ink leading-tight">Angelo&apos;s Portfolio Assistant</p>
+                <p className="text-sm font-medium text-ink leading-tight">Meira</p>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber opacity-75" />
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber" />
                   </span>
-                  <span className="text-[10px] text-muted">Online · answers from this site</span>
+                  <span className="text-[10px] text-muted">Angelo&apos;s portfolio assistant</span>
                 </div>
               </div>
             </button>
@@ -248,12 +259,15 @@ export default function PortfolioChatbot() {
 
       {/* Toggle button */}
       <button
-        onClick={() => setIsOpen((v) => !v)}
+        onClick={() => {
+          if (!isOpen) playCatClick();
+          setIsOpen((v) => !v);
+        }}
         className="relative flex items-center justify-center h-14 w-14 rounded-full bg-surface border border-line
                    elev-lg rim hover:scale-105 transition-transform duration-200"
-        aria-label={isOpen ? "Close portfolio chat" : "Open portfolio chat"}
+        aria-label={isOpen ? "Close chat with Meira" : "Chat with Meira"}
       >
-        {isOpen ? <X size={20} className="text-ink" /> : <Cat size={36} />}
+        {isOpen ? <X size={20} className="text-ink" /> : <Cat size={36} variant="black" />}
       </button>
     </div>
   );
