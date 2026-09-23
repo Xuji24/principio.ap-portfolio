@@ -31,12 +31,12 @@ export function NameLockup() {
         <CatSvg ref={svgRef} />
       </button>
       <div>
-        <span ref={nameRef} className="font-display font-extrabold text-[15px] leading-tight tracking-[-.01em] text-ink block">
+        <span ref={nameRef} className="font-display font-extrabold text-[14px] leading-tight tracking-[-.02em] text-ink block whitespace-nowrap">
           {site.name.split("").map((c, i) => (
             <span key={i} className="name-ltr">{c === " " ? " " : c}</span>
           ))}
         </span>
-        <span className="font-mono text-[7.5px] uppercase tracking-[.1em] text-muted mt-1 block">
+        <span className="font-mono text-[7.5px] uppercase tracking-widest text-muted mt-1 block">
           {site.role}
         </span>
       </div>

@@ -133,7 +133,7 @@ body {
 @keyframes cat-tail { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
 
 /* ============ NAME EASTER EGG ============ */
-.name-ltr { display: inline-block; transform-origin: 50% 58%; will-change: transform; }
+.name-ltr { display: inline-block; white-space: pre; transform-origin: 50% 58%; will-change: transform; }
 
 .name-ltr.spin { animation: ltr-spin .72s cubic-bezier(.42,0,.22,1) both; }
 @keyframes ltr-spin {
