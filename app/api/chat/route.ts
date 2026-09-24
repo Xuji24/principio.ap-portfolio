@@ -16,17 +16,50 @@ export const runtime = "nodejs";
 // 2. VERCEL_PROJECT_PRODUCTION_URL — Vercel sets this automatically for the production deployment
 // 3. VERCEL_URL — Vercel sets this automatically for preview/branch deployments
 // 4. localhost:3000 — local dev fallback
-const ALLOWED_ORIGIN =
+const rawSiteUrl =
   process.env.SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
   (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
   "http://localhost:3000";
 
+// SITE_URL is documented (.env.example) as a bare domain like
+// "angeloprincipio.dev", but it's used below as a full origin. A value
+// without a scheme makes `new URL()` throw, which previously fell through to
+// isAllowedOrigin's catch block and rejected EVERY request with 403 — a
+// config typo silently bricking the whole assistant. Normalize once here so
+// that failure mode is structurally impossible instead of relying on whoever
+// sets the env var to remember the "https://" prefix.
+const ALLOWED_ORIGIN = /^https?:\/\//i.test(rawSiteUrl) ? rawSiteUrl : `https://${rawSiteUrl}`;
+
+let allowedOriginHost: string | null = null;
+try {
+  allowedOriginHost = new URL(ALLOWED_ORIGIN).host;
+} catch {
+  console.error(`Chat route: ALLOWED_ORIGIN "${ALLOWED_ORIGIN}" is not a parseable URL — origin check will deny all requests with an Origin/Referer header until this is fixed.`);
+}
+
 function isAllowedOrigin(req: NextRequest): boolean {
   const origin = req.headers.get("origin") || req.headers.get("referer");
   if (!origin) return true; // same-origin browser requests sometimes omit this — don't block your own site
+
+  // Local dev runs on localhost/127.0.0.1, often on a different port than the
+  // hardcoded :3000 fallback (Next.js auto-assigns another one when 3000 is
+  // busy), and SITE_URL in .env is meant to hold your *production* domain —
+  // it will never match a local origin. Rather than rely on remembering to
+  // unset SITE_URL for local testing, trust any localhost origin outside
+  // production; nothing but your own machine can reach your own dev server.
+  if (process.env.NODE_ENV !== "production") {
+    try {
+      const { hostname } = new URL(origin);
+      if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+    } catch {
+      return false;
+    }
+  }
+
+  if (!allowedOriginHost) return false;
   try {
-    return new URL(origin).host === new URL(ALLOWED_ORIGIN).host;
+    return new URL(origin).host === allowedOriginHost;
   } catch {
     return false;
   }
@@ -107,6 +140,8 @@ Respond with ONE JSON object and NOTHING else. No text before it, no text after 
 Schema (use these exact short keys to save tokens): {"r": "your reply", "s": ["follow-up 1", "follow-up 2", "follow-up 3"]}
 - "r": the answer, 2-3 sentences max.
 - "s": exactly 3 short follow-up questions (under 8 words each), answerable from the info above, not already asked in this conversation.
+  - Each one must be phrased as the VISITOR asking YOU about Angelo (third person: "he"/"his"/"Angelo's") — e.g. "What was his role in X?"
+  - Never phrase a suggestion as a question directed at the visitor's own opinion or preference (anything with "you"/"your", e.g. "Which project interests you most?") — you cannot answer that from the info above, and clicking it just sends it back to you as if the visitor asked it.
 
 Example of a CORRECT full response (this is the entire output, nothing else):
 {"r": "Angelo is a Full Stack Developer skilled in Python and PostgreSQL.", "s": ["What backend projects has he built?", "What databases does he use?", "Does he have any certifications?"]}
@@ -140,7 +175,14 @@ function buildProviders(): Provider[] {
       name: "Groq",
       apiKey: process.env.GROQ_API_KEY,
       url: "https://api.groq.com/openai/v1/chat/completions",
-      model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+      // CONFIRMED 2026-09-24: production logs showed Groq returning 404
+      // model_not_found for "llama-3.3-70b-versatile" — Groq moved it behind
+      // Enterprise-tier access, and it's no longer on the free-plan model
+      // list (console.groq.com/docs/rate-limits, "Free Plan Limits"). Free
+      // tier currently offers openai/gpt-oss-120b, openai/gpt-oss-20b, and
+      // qwen/qwen3.8-27b as general-purpose chat models — swap this default
+      // if Groq's free lineup changes again.
+      model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       supportsJsonMode: true, // Groq's OpenAI-compatible endpoint enforces valid JSON output for this
     },
     {
@@ -156,6 +198,12 @@ function buildProviders(): Provider[] {
     {
       name: "OpenCode Zen",
       apiKey: process.env.OPENCODE_API_KEY,
+      // CONFIRMED 2026-09-24: this endpoint 403s every server-to-server call
+      // with {"type":"FreeTierError","message":"OpenCode's free tier can only
+      // be used from within OpenCode"} — it rejects calls from outside their
+      // own client regardless of key validity. Left in the chain as a
+      // harmless last-resort (it just fails fast and costs one extra round
+      // trip), but do not treat it as a real fallback until that changes.
       url: "https://opencode.ai/zen/v1/chat/completions",
       model: process.env.OPENCODE_MODEL || "big-pickle",
     },
@@ -169,34 +217,70 @@ function extractJsonObject(raw: string): string | null {
   return raw.slice(start, end + 1);
 }
 
-function parseModelOutput(raw: string): ParsedReply {
-  const cleaned = raw.replace(/```json|```/g, "").trim();
+// Scope guardrail bounds — generous enough not to reject legitimate replies
+// (max_tokens: 300 already bounds worst case), tight enough to catch a model
+// that ignored instructions and dumped unrelated/runaway content.
+const MAX_REPLY_LENGTH = 1200;
+const MAX_SUGGESTIONS = 3;
+const MAX_SUGGESTION_LENGTH = 80;
 
-  // Some free models echo the reply as plain text AND append the JSON block.
-  // Pulling out just the {...} substring (rather than requiring the whole
-  // string to be valid JSON) handles that case instead of falling back to
-  // dumping the raw, duplicated text to the user.
+// A suggestion addressed to the visitor ("you"/"your") isn't something the
+// assistant can answer from Angelo's resume — it can only ever answer
+// questions about Angelo, not about the visitor's own preferences. Clicking
+// one just sends that same phrasing back as if the visitor asked it, which
+// is what produced the "Which project interests you most?" dead end.
+// SYSTEM_PROMPT's "s" rule already tells the model to avoid this; enforce it
+// structurally too, since free-tier models don't always follow instructions.
+const SECOND_PERSON_RE = /\byou\b|\byour\b/i;
+
+function isValidSuggestion(s: unknown): s is string {
+  return (
+    typeof s === "string" &&
+    s.trim().length > 0 &&
+    s.length <= MAX_SUGGESTION_LENGTH &&
+    !SECOND_PERSON_RE.test(s)
+  );
+}
+
+function stripReasoningArtifacts(raw: string): string {
+  // Reasoning-tuned free models sometimes emit visible chain-of-thought
+  // instead of (or wrapped around) the requested JSON. Strip known wrappers
+  // before hunting for the JSON object, so compliant-but-noisy output still
+  // parses instead of always falling through to the next provider.
+  return raw.replace(/<think>[\s\S]*?<\/think>/gi, "").replace(/<reasoning>[\s\S]*?<\/reasoning>/gi, "");
+}
+
+// Returns null — never raw text — when the model didn't produce a
+// schema-valid reply. This is the guardrail that stops a non-compliant
+// model's raw output (which is not guaranteed to stay in scope, and is what
+// caused the "responded with a JSON/thought-process dump" report) from ever
+// reaching a visitor. The caller treats null exactly like a provider failure
+// and moves on to the next one, or to the standard "unavailable" message.
+function parseModelOutput(raw: string): ParsedReply | null {
+  const cleaned = stripReasoningArtifacts(raw)
+    .replace(/```json|```/g, "")
+    .trim();
+
   const jsonSlice = extractJsonObject(cleaned);
+  if (!jsonSlice) return null;
 
-  if (jsonSlice) {
-    try {
-      const parsed = JSON.parse(jsonSlice);
-      const reply = parsed.r ?? parsed.reply;
-      const suggestions = parsed.s ?? parsed.suggestions;
-      if (typeof reply === "string" && reply.trim()) {
-        return {
-          reply: reply.trim(),
-          suggestions: Array.isArray(suggestions) ? suggestions.slice(0, 3) : [],
-        };
-      }
-    } catch {
-      // Malformed JSON — fall through to plain-text handling below.
+  try {
+    const parsed = JSON.parse(jsonSlice);
+    const reply = parsed.r ?? parsed.reply;
+    const suggestionsRaw = parsed.s ?? parsed.suggestions;
+
+    if (typeof reply !== "string" || !reply.trim() || reply.length > MAX_REPLY_LENGTH) {
+      return null;
     }
-  }
 
-  // No usable JSON found at all — strip a leading/trailing stray JSON-looking
-  // fragment if present, otherwise just use the raw text as-is.
-  return { reply: cleaned.trim(), suggestions: [] };
+    const suggestions = Array.isArray(suggestionsRaw)
+      ? suggestionsRaw.filter(isValidSuggestion).slice(0, MAX_SUGGESTIONS)
+      : [];
+
+    return { reply: reply.trim(), suggestions };
+  } catch {
+    return null;
+  }
 }
 
 async function callProvider(
@@ -232,7 +316,12 @@ async function callProvider(
     const raw = data?.choices?.[0]?.message?.content;
     if (typeof raw !== "string" || !raw.trim()) return null;
 
-    return parseModelOutput(raw);
+    const result = parseModelOutput(raw);
+    if (!result) {
+      console.error(`${provider.name} returned non-schema output (truncated):`, raw.slice(0, 300));
+      return null;
+    }
+    return result;
   } catch (err) {
     console.error(`${provider.name} threw an error:`, err);
     return null;

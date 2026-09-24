@@ -78,7 +78,7 @@ export default function OverviewPage() {
         {featured && (
           <Link
             href={`/work/${featured.slug}`}
-            className="btn-lift transition-shadow lg:col-span-2 bg-surface border border-line rounded-xl overflow-hidden rim block group"
+            className="btn-lift transition-shadow lg:col-span-2 bg-surface border border-line rounded-xl overflow-hidden rim block group flex flex-col"
           >
             <div className="p-4 pb-0">
               <CardHeader icon={FolderKanban} title="Work" blurb="Funnels, workflows and apps built to solve real problems." />
@@ -96,40 +96,42 @@ export default function OverviewPage() {
           </Link>
         )}
 
-        <div className="lg:col-span-3 flex flex-col gap-3.5">
-          <Link href="/skills" className="btn-lift transition-shadow bg-surface border border-line rounded-xl p-4 rim block group">
-            <CardHeader icon={Layers} title="Skills" blurb="Languages, frameworks and tools I build with." />
-            <div className="mt-4 space-y-3">
-              {getStack().map((g) => (
-                <div key={g.label}>
-                  <p className="font-mono text-[9px] uppercase tracking-widest text-muted mb-1.5">{g.label}</p>
-                  <LogoLoop
-                    logos={g.items.map((t) => {
-                      const TechIcon = TECH_ICONS[t];
-                      return {
-                        ariaLabel: t,
-                        node: (
-                          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink bg-paper border border-line rounded-md px-2 py-1.5 whitespace-nowrap">
-                            {TechIcon && <TechIcon className="w-3 h-3 shrink-0" />}
-                            {t}
-                          </span>
-                        ),
-                      };
-                    })}
-                    speed={26}
-                    gap={6}
-                    logoHeight={26}
-                    pauseOnHover
-                    fadeOut
-                    fadeOutColor="var(--surface)"
-                    ariaLabel={`${g.label} skills`}
-                  />
-                </div>
-              ))}
-            </div>
-          </Link>
+        <Link href="/skills" className="btn-lift transition-shadow lg:col-span-3 bg-surface border border-line rounded-xl p-4 rim block group">
+          <CardHeader icon={Layers} title="Skills" blurb="Languages, frameworks and tools I build with." />
+          <div className="mt-4 space-y-3">
+            {getStack().map((g) => (
+              <div key={g.label}>
+                <p className="font-mono text-[9px] uppercase tracking-widest text-muted mb-1.5">{g.label}</p>
+                <LogoLoop
+                  logos={g.items.map((t) => {
+                    const TechIcon = TECH_ICONS[t];
+                    return {
+                      ariaLabel: t,
+                      node: (
+                        <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink bg-paper border border-line rounded-md px-2 py-1.5 whitespace-nowrap">
+                          {TechIcon && <TechIcon className="w-3 h-3 shrink-0" />}
+                          {t}
+                        </span>
+                      ),
+                    };
+                  })}
+                  speed={26}
+                  gap={6}
+                  logoHeight={26}
+                  pauseOnHover
+                  fadeOut
+                  fadeOutColor="var(--surface)"
+                  ariaLabel={`${g.label} skills`}
+                />
+              </div>
+            ))}
+          </div>
+        </Link>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Below 1920px: full-width row under both Work and Skills.
+            At 1920px+: repositioned to sit under Skills only (cols 3-5). */}
+        <div className="lg:col-span-5 min-[1920px]:lg:col-start-3 min-[1920px]:lg:col-span-3 @container">
+          <div className="grid grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-3 gap-3.5">
             <Link href="/experience" className="btn-lift transition-shadow relative overflow-hidden bg-surface border border-line rounded-xl p-4 rim block group">
               <Watermark icon={Briefcase} />
               <CardHeader icon={Briefcase} title="Experience" blurb="Where the work actually happened." />
