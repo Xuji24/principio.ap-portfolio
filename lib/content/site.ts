@@ -1,7 +1,3 @@
-import { getProjects } from "./projects";
-import { getCredentials } from "./credentials";
-import { getStack } from "./skills";
-
 export const site = {
   name: "Angelo Principio",
   role: "Full Stack Developer",
@@ -14,13 +10,3 @@ export const site = {
     resume: "/angelo-principio-resume.pdf",
   },
 } as const;
-
-export function getStats() {
-  const projects = getProjects();
-  return [
-    { label: "Projects", value: projects.length },
-    { label: "Credentials", value: getCredentials().length },
-    { label: "Technologies", value: new Set(getStack().flatMap((g) => g.items)).size },
-    { label: "Live Deploys", value: projects.filter((p) => p.links.live).length },
-  ];
-}

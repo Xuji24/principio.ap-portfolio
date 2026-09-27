@@ -42,3 +42,19 @@ export type SkillEvidence = { slug: string; title: string };
 export type SkillItem = { name: string; evidence: SkillEvidence[]; portfolio: boolean };
 export type SkillGroup = { label: string; items: SkillItem[] };
 export type Credential = { id: string; title: string; issuer: string; year: string; image: string; description: string };
+
+/** short: compact chip label for the Overview teaser card; title is the full heading on /services. */
+export type Service = {
+  id: string;
+  title: string;
+  short: string;
+  description: string;
+  /** Short badge shown on the /services card, e.g. "End to end". */
+  pill: string;
+  checklist: string[];
+  tech: string[];
+};
+
+export type MethodStep = { id: string; title: string; description: string; tags: string[] };
+
+export type PipelineNode = { id: string; title: string; subtitle: string };

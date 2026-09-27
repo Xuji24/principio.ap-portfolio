@@ -33,3 +33,12 @@ export const IconArrowUpRight = ({ className }: IconProps) => (
 export const IconClose = ({ className }: IconProps) => (
   <svg {...base} className={className}><path d="M18 6L6 18M6 6l12 12" /></svg>
 );
+export const IconCat = ({ className }: IconProps) => (
+  <svg {...base} className={className}>
+    <path d="M4 9l3-6 2 4.5M20 9l-3-6-2 4.5" />
+    <path d="M4 9c0-2 1.5-3 3-3h10c1.5 0 3 1 3 3v5a7 7 0 01-7 7h-2a7 7 0 01-7-7V9z" />
+    <circle cx="9.5" cy="12.5" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="14.5" cy="12.5" r="0.9" fill="currentColor" stroke="none" />
+    <path d="M11 15.2c.3.4.7.4 1 0" />
+  </svg>
+);

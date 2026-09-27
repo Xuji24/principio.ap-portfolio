@@ -2,13 +2,13 @@ import type { Credential } from "./types";
 
 const CREDENTIALS: Credential[] = [
   {
-    id: "modern-ai",
-    title: "Introduction to Modern AI",
-    issuer: "Cisco",
-    year: "2025",
-    image: "/Introduction_to_Modern_AI.png",
+    id: "google-ai-professional-certificate",
+    title: "Google AI professional certificate",
+    issuer: "Google",
+    year: "2026",
+    image: "/google-ai-professional-cert.png",
     description:
-      "A Cisco Networking Academy primer on how modern AI actually works — capabilities, limits, and effective prompting — with hands-on practice across 10+ tools including ChatGPT, Gemini, and Claude.",
+      "The first course in Google's AI Professional Certificate, covering core generative AI concepts and how to evaluate AI output responsibly, with hands-on prompting practice in Gemini.",
   },
   {
     id: "ai-fundamentals",
@@ -72,6 +72,15 @@ const CREDENTIALS: Credential[] = [
     image: "/Python_Essentials_1.png",
     description:
       "A 30-hour Cisco Networking Academy and Python Institute course covering Python syntax, data types, control flow, and functions — preparation for the PCEP entry-level certification.",
+  },
+  {
+    id: "modern-ai",
+    title: "Introduction to Modern AI",
+    issuer: "Cisco",
+    year: "2025",
+    image: "/Introduction_to_Modern_AI.png",
+    description:
+      "A Cisco Networking Academy primer on how modern AI actually works — capabilities, limits, and effective prompting — with hands-on practice across 10+ tools including ChatGPT, Gemini, and Claude.",
   },
   {
     id: "cybersecurity",

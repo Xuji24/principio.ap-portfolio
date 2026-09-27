@@ -14,9 +14,9 @@ function renderSidebar(props?: React.ComponentProps<typeof Sidebar>) {
 }
 
 describe("Sidebar", () => {
-  it("renders all six routes", () => {
+  it("renders all seven routes", () => {
     renderSidebar();
-    expect(NAV_ITEMS).toHaveLength(6);
+    expect(NAV_ITEMS).toHaveLength(7);
     for (const item of NAV_ITEMS) {
       expect(screen.getByRole("link", { name: item.label })).toBeInTheDocument();
     }

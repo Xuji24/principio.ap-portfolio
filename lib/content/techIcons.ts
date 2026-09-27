@@ -3,8 +3,9 @@ import {
   SiTypescript, SiPython, SiJavascript, SiSharp, SiNextdotjs, SiReact, SiExpress,
   SiFastapi, SiTailwindcss, SiShadcnui, SiPostgresql, SiSupabase, SiMysql,
   SiSqlalchemy, SiGit, SiVite, SiNodedotjs, SiOpenai, SiFramer, SiVercel,
-  SiVitest, SiTestinglibrary, SiElevenlabs,
+  SiVitest, SiTestinglibrary, SiElevenlabs, SiClaude, SiSlack,
 } from "react-icons/si";
+import { IconCursor, IconVSCode } from "@/components/ui/BrandIcons";
 
 /** Logo for a stack item, where one exists in Simple Icons — chips fall back to text-only. */
 export const TECH_ICONS: Record<string, IconType> = {
@@ -31,4 +32,8 @@ export const TECH_ICONS: Record<string, IconType> = {
   Vitest: SiVitest,
   "Testing Library": SiTestinglibrary,
   ElevenLabs: SiElevenlabs,
+  "Claude Code": SiClaude,
+  Slack: SiSlack,
+  Cursor: IconCursor,
+  "Visual Studio Code": IconVSCode,
 };

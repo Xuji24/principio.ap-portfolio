@@ -2,9 +2,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Home, FolderKanban, Briefcase, Layers, Award, MessageCircle, type LucideIcon } from "lucide-react";
+import { Home, FolderKanban, Wrench, Briefcase, Layers, Award, MessageCircle, type LucideIcon } from "lucide-react";
 import { NameLockup } from "@/components/cat/NameLockup";
-import { IconLinkedIn, IconGitHub, IconMail, IconSun, IconMoon } from "@/components/ui/Icon";
+import { IconLinkedIn, IconGitHub, IconMail, IconSun, IconMoon, IconCat } from "@/components/ui/Icon";
 import { useTheme } from "@/components/ThemeContext";
 import { site } from "@/lib/content/site";
 import { liftPress } from "@/lib/motion/liftPress";
@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 export const NAV_ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/", label: "Overview", icon: Home },
   { href: "/work", label: "Work", icon: FolderKanban },
+  { href: "/services", label: "Services", icon: Wrench },
   { href: "/experience", label: "Experience", icon: Briefcase },
   { href: "/skills", label: "Skills", icon: Layers },
   { href: "/credentials", label: "Credentials", icon: Award },
@@ -31,7 +32,7 @@ export function Sidebar({ viewCount }: { viewCount?: number }) {
   const dark = theme === "dark";
 
   return (
-    <aside className="hidden lg:flex w-72 shrink-0 bg-surface border-r border-line flex-col p-6 min-h-dvh">
+    <aside className="hidden lg:flex w-72 shrink-0 bg-surface border-r border-line flex-col p-6 h-dvh sticky top-0 overflow-hidden">
       <NameLockup />
 
       {typeof viewCount === "number" && (
@@ -73,7 +74,7 @@ export function Sidebar({ viewCount }: { viewCount?: number }) {
 
       <div className="h-px bg-line -mx-6 mt-6 mb-4" />
 
-      <nav aria-label="Main" className="flex-1">
+      <nav aria-label="Main" className="flex-1 min-h-0 overflow-y-auto">
         <ul className="flex flex-col gap-1.5">
           {NAV_ITEMS.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -95,7 +96,7 @@ export function Sidebar({ viewCount }: { viewCount?: number }) {
                       active ? "text-amber" : "text-muted group-hover:text-ink",
                     )}
                   >
-                    <ItemIcon className="w-[18px] h-[18px]" strokeWidth={2} />
+                    <ItemIcon className="w-4.5 h-4.5" strokeWidth={2} />
                   </motion.span>
                   {item.label}
                 </Link>
@@ -104,6 +105,19 @@ export function Sidebar({ viewCount }: { viewCount?: number }) {
           })}
         </ul>
       </nav>
+
+      <div className="h-px bg-line -mx-6 mb-4" />
+
+      <div className="flex items-center gap-3 px-1">
+        <span className="w-9 h-9 shrink-0 grid place-items-center rounded-full bg-paper border border-line text-muted">
+          <IconCat className="w-5 h-5" />
+        </span>
+        <p className="font-mono text-xs text-muted leading-snug">
+          &copy; {new Date().getFullYear()}
+          <br />
+          {site.name}. All rights reserved.
+        </p>
+      </div>
     </aside>
   );
 }

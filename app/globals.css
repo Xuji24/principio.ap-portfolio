@@ -157,6 +157,19 @@ html.theme-transitioning * {
     0% { background-position: 150% 0; }
     100% { background-position: -50% 0; }
   }
+
+  /* Travels along a connector line (see components/services/AnimatedDot.tsx):
+     28.57% of the 3.5s cycle = the 1s eased travel, the rest is the hold
+     before the next hop. Percentage left/top isn't part of Framer Motion's
+     optimized property set (confirmed: it silently no-ops), so this is a
+     plain keyframe animation instead — also means it's covered for free by
+     the prefers-reduced-motion rule below. */
+  .pipeline-dot { animation: pipeline-dot 3.5s ease-in-out infinite; }
+  @keyframes pipeline-dot {
+    0% { left: 0%; top: 0%; }
+    28.57% { left: 100%; top: 100%; }
+    100% { left: 100%; top: 100%; }
+  }
 }
 
 /* ============ REDUCED MOTION ============ */
