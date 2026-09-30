@@ -27,11 +27,13 @@ const ENTRIES: ExperienceEntry[] = [
     end: "2026",
     meta: "Education · 4 years",
     outcomes: [
-      "Coursework across software engineering, database systems and web development",
+      "Created different projects across different tech stack, from ",
       "Built PUP EduTrack, a student and faculty tracking system, in C# against MySQL",
-      "Completed the degree while shipping five personal projects to production",
+      "StoutCafe, a static website integrated with HTML, CSS, Javascript, JQuery for interactivity",
+      "D.Creatives, a full stack reservation platform integrated with payment gateway using paymongo, AI face-swap feature via hugging face, real-time admin analytics, dashboard, audit logs, and feature updates.",
+      "Completed the degree while shipping two university projects and three personal projects to production",
     ],
-    tech: ["C#", "MySQL", "Software Engineering", "Databases"],
+    tech: ["C#", ".NETFramework", "HTML", "CSS", "Javascript", "JQuery", "React.js", "Node.js", "Next.js", "Express.js", "SQL", "PostgreSQL", "MySQL"],
   },
 ];
 
