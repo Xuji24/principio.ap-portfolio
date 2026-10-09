@@ -74,17 +74,7 @@ const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000; // 10 minutes
 type RateLimitEntry = { count: number; resetAt: number };
 const rateLimitStore = new Map<string, RateLimitEntry>();
 
-// Periodic garbage collection to prevent memory leaks causing 502 crashes
-if (typeof setInterval !== "undefined") {
-  setInterval(() => {
-    const now = Date.now();
-    for (const [ip, entry] of rateLimitStore.entries()) {
-      if (now > entry.resetAt) {
-        rateLimitStore.delete(ip);
-      }
-    }
-  }, 5 * 60 * 1000); // Clean every 5 minutes
-}
+
 
 function checkRateLimit(ip: string): { allowed: boolean; retryAfterSeconds: number } {
   const now = Date.now();
@@ -184,41 +174,31 @@ type Provider = {
 function buildProviders(): Provider[] {
   return [
     {
-      name: "Groq",
+      name: "Groq-Primary",
       apiKey: process.env.GROQ_API_KEY,
       url: "https://api.groq.com/openai/v1/chat/completions",
-      // CONFIRMED 2026-09-24: production logs showed Groq returning 404
-      // model_not_found for "llama-3.3-70b-versatile" — Groq moved it behind
-      // Enterprise-tier access, and it's no longer on the free-plan model
-      // list (console.groq.com/docs/rate-limits, "Free Plan Limits"). Free
-      // tier currently offers openai/gpt-oss-120b, openai/gpt-oss-20b, and
-      // qwen/qwen3.8-27b as general-purpose chat models — swap this default
-      // if Groq's free lineup changes again.
       model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
-      supportsJsonMode: true, // Groq's OpenAI-compatible endpoint enforces valid JSON output for this
+      supportsJsonMode: true,
     },
     {
-      name: "OpenRouter",
+      name: "Groq-HighSpeed-Fallback",
+      apiKey: process.env.GROQ_API_KEY,
+      url: "https://api.groq.com/openai/v1/chat/completions",
+      // Lighter models like qwen3.8-27b have separate, sometimes more forgiving rate buckets
+      model: "qwen/qwen3.8-27b", 
+      supportsJsonMode: true,
+    },
+    {
+      name: "OpenRouter-Fallback",
       apiKey: process.env.OPENROUTER_API_KEY,
       url: "https://openrouter.ai/api/v1/chat/completions",
-      model: process.env.OPENROUTER_MODEL || "openrouter/free",
+      // Hardcode a highly available specific free model rather than the generic pool
+      model: "meta-llama/llama-3.3-70b-instruct:free",
       extraHeaders: {
         "HTTP-Referer": process.env.SITE_URL || "https://localhost:3000",
         "X-Title": "Angelo Portfolio Assistant",
       },
-    },
-    {
-      name: "OpenCode Zen",
-      apiKey: process.env.OPENCODE_API_KEY,
-      // CONFIRMED 2026-09-24: this endpoint 403s every server-to-server call
-      // with {"type":"FreeTierError","message":"OpenCode's free tier can only
-      // be used from within OpenCode"} — it rejects calls from outside their
-      // own client regardless of key validity. Left in the chain as a
-      // harmless last-resort (it just fails fast and costs one extra round
-      // trip), but do not treat it as a real fallback until that changes.
-      url: "https://opencode.ai/zen/v1/chat/completions",
-      model: process.env.OPENCODE_MODEL || "big-pickle",
-    },
+    }
   ];
 }
 
